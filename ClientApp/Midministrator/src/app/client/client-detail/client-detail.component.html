@@ -1,0 +1,336 @@
+<mat-card *ngIf="!client">
+        <mat-card-header>
+            <mat-card-title>
+                    Loading...
+            </mat-card-title>
+        </mat-card-header>
+</mat-card>
+<mat-card *ngIf="client">
+    <form #clientForm="ngForm" name="clientForm">
+        <mat-card-header>
+            <mat-card-title *ngIf="client.id > 0">
+                Editing {{ client.clientName }}
+            </mat-card-title>
+            <mat-card-title *ngIf="client.id < 1">
+                New client
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <br>
+            <!-- <mat-grid-list cols="4" rowHeight="fit"> -->
+            <!-- <mat-grid-tile [colspan]="2" > -->
+            <div fxLayout="row wrap" layout-wrap fxLayoutGap="1%">
+                <div fxFlex="49" fxFlex.lt-lg="98">
+                    <mat-card class="client-container">
+                        <mat-card-header>
+                            <mat-card-title>
+                                General Settings
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <input matInput placeholder="Client ID" [(ngModel)]="client.clientId"
+                                        #clientId="ngModel" name="clientId" required>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Name" [(ngModel)]="client.clientName"
+                                        #clientName="ngModel" name="clientName">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Uri" [(ngModel)]="client.clientUri"
+                                        #clientUri="ngModel" name="clientUri">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Description" [(ngModel)]="client.description"
+                                        #description="ngModel" name="description">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Logo Uri" [(ngModel)]="client.logoUri"
+                                        #logoUri="ngModel" name="logoUri">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Back Channel Logout Uri"
+                                        [(ngModel)]="client.backChannelLogoutUri" #backChannelLogoutUri="ngModel"
+                                        name="backChannelLogoutUri">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Front Channel Logout Uri"
+                                        [(ngModel)]="client.frontChannelLogoutUri" #frontChannelLogoutUri="ngModel"
+                                        name="frontChannelLogoutUri">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Created" [(ngModel)]="client.created" readonly="true"
+                                        #created="ngModel" name="created">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Updated" [(ngModel)]="client.updated" readonly="true"
+                                        #updated="ngModel" name="updated">
+                                </mat-form-field>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.alwaysSendClientClaims"
+                                    #alwaysSendClientClaims="ngModel" name="alwaysSendClientClaims">Always send client
+                                    claims</mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.enableLocalLogin"
+                                    #enableLocalLogin="ngModel" name="enableLocalLogin">Enable local login
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.requireClientSecret"
+                                    #requireClientSecret="ngModel" name="requireClientSecret">Require Client Secret
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.requireConsent" #requireConsent="ngModel"
+                                    name="requireConsent">Require Consent
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.enabled" #enabled="ngModel"
+                                    name="enabled">Enabled</mat-checkbox>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                    <!-- </mat-grid-tile> -->
+                </div>
+                <!-- <mat-grid-tile [colspan]="2" style="height: calc(100vh - 24px)"> -->
+                <div fxFlex="49" fxFlex.lt-lg="98">
+                    <mat-card class="client-container">
+                        <mat-card-header>
+                            <mat-card-title>
+                                Token Settings
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Access Token Lifetime (seconds)"
+                                        [(ngModel)]="client.accessTokenLifetime" #accessTokenLifetime="ngModel"
+                                        name="accessTokenLifetime" required>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Authorization Code Lifetime (seconds)"
+                                        [(ngModel)]="client.authorizationCodeLifetime"
+                                        #authorizationCodeLifetime="ngModel" name="authorizationCodeLifetime" required>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Identity Token Lifetime (seconds)"
+                                        [(ngModel)]="client.identityTokenLifetime" #identityTokenLifetime="ngModel"
+                                        name="identityTokenLifetime" required>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Sliding Refresh Token Lifetime (seconds)"
+                                        [(ngModel)]="client.slidingRefreshTokenLifetime"
+                                        #slidingRefreshTokenLifetime="ngModel" name="slidingRefreshTokenLifetime" required>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Access Token Type
+                                    </mat-label>
+                                    <mat-select [(ngModel)]="client.accessTokenType" name="accessTokenType"
+                                        #accessTokenType="ngModel">
+                                        <mat-option *ngFor="let att of this.accessTokenTypes" [value]="att.value">
+                                            {{att.type}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.updateAccessTokenClaimsOnRefresh"
+                                    #updateAccessTokenClaimsOnRefresh="ngModel" name="updateAccessTokenClaimsOnRefresh">
+                                    Update access token claims on refresh
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.refreshTokenUsage"
+                                    #refreshTokenUsage="ngModel" name="refreshTokenUsage">
+                                    Refresh token usage
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.refreshTokenExpiration"
+                                    #refreshTokenExpiration="ngModel" name="refreshTokenExpiration">
+                                    Refresh token expiration
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.includeJwtId" #includeJwtId="ngModel"
+                                    name="includeJwtId">
+                                    Include JWT Id
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.alwaysIncludeUserClaimsInIdToken"
+                                    #alwaysIncludeUserClaimsInIdToken="ngModel" name="alwaysIncludeUserClaimsInIdToken">
+                                    Always include user claims in ID token
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.allowAccessTokensViaBrowser"
+                                    #allowAccessTokensViaBrowser="ngModel" name="allowAccessTokensViaBrowser">
+                                    Allow access tokens via browser
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.allowOfflineAccess"
+                                    #allowOfflineAccess="ngModel" name="allowOfflineAccess">Allow offline access
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.backChannelLogoutSessionRequired"
+                                    #backChannelLogoutSessionRequired="ngModel" name="backChannelLogoutSessionRequired">
+                                    Back channel logout session required
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.frontChannelLogoutSessionRequired"
+                                    #frontChannelLogoutSessionRequired="ngModel"
+                                    name="frontChannelLogoutSessionRequired">Front channel logout session required
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.allowPlainTextPkce"
+                                    #allowPlainTextPkce="ngModel" name="allowPlainTextPkce">Allow plain text PKCE
+                                </mat-checkbox>
+                                <mat-checkbox matCheckbox [(ngModel)]="client.requirePkce" #requirePkce="ngModel"
+                                    name="requirePkce">Require PKCE
+                                </mat-checkbox>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <!-- <div fxFlex="49" fxFlex.lt-lg="98">
+                    <mat-card class="client-container">
+                        <mat-card-header>
+                            <mat-card-title>
+                                PKCE Settings
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="sixteenpix">
+                            <div class="form-group-style">
+                                    
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div> -->
+                <div fxFlex="100">
+                    <mat-card class="client-container">
+                        <mat-card-header>
+                            <mat-card-title>
+                                Related Settings
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="sixteenpix">
+                            <div fxLayout="row wrap" layout-wrap fxLayoutGap="1%" >
+                                <div fxFlex="49" fxFlex.lt-lg="98" class="form-group-style">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Add redirect uri" [matChipInputFor]="redirectUris"
+                                            [matChipInputSeparatorKeyCodes]="enterKeyCode"
+                                            [matChipInputAddOnBlur]="true"
+                                            (matChipInputTokenEnd)="add($event, client.redirectUris, 'redirectUri')">
+                                        <mat-label>Redirect URIs</mat-label>
+                                        <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical"
+                                            #redirectUris>
+                                            <mat-chip *ngFor="let redirectUri of client.redirectUris" [removable]="true"
+                                                (removed)="remove(redirectUri, client.redirectUris)">
+                                                {{ redirectUri.redirectUri }}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Add post-logout uri"
+                                            [matChipInputFor]="postLogoutRedirectUris"
+                                            [matChipInputSeparatorKeyCodes]="enterKeyCode"
+                                            [matChipInputAddOnBlur]="true"
+                                            (matChipInputTokenEnd)="add($event, client.postLogoutRedirectUris, 'postLogoutRedirectUri')">
+                                        <mat-label>Post Logout Redirect URIs</mat-label>
+                                        <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical"
+                                            #postLogoutRedirectUris>
+                                            <mat-chip
+                                                *ngFor="let postLogoutRedirectUri of client.postLogoutRedirectUris"
+                                                [removable]="true"
+                                                (removed)="remove(postLogoutRedirectUri, client.postLogoutRedirectUris)">
+                                                {{ postLogoutRedirectUri.postLogoutRedirectUri }}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Add grant type"
+                                            [matChipInputFor]="allowedGrantTypes"
+                                            [matChipInputSeparatorKeyCodes]="enterKeyCode"
+                                            [matChipInputAddOnBlur]="true"
+                                            (matChipInputTokenEnd)="add($event, client.allowedGrantTypes, 'grantType')">
+                                        <mat-label>Allowed Grant Types</mat-label>
+                                        <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical"
+                                            #allowedGrantTypes>
+                                            <mat-chip *ngFor="let allowedGrantType of client.allowedGrantTypes"
+                                                [removable]="true"
+                                                (removed)="remove(allowedGrantType, client.allowedGrantTypes)">
+                                                {{ allowedGrantType.grantType }}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                </div>
+                                <div fxFlex="49" fxFlex.lt-lg="98" class="form-group-style">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Add client secret"
+                                            [matChipInputFor]="clientSecrets"
+                                            [matChipInputSeparatorKeyCodes]="enterKeyCode"
+                                            [matChipInputAddOnBlur]="true"
+                                            (matChipInputTokenEnd)="add($event, client.clientSecrets, 'value', [{ type: 'type', value: 'SharedSecret' }])">
+                                        <mat-label>Client Secrets</mat-label>
+                                        <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical"
+                                            #clientSecrets>
+                                            <mat-chip *ngFor="let clientSecret of client.clientSecrets"
+                                                [removable]="true"
+                                                (removed)="remove(clientSecret, client.clientSecrets)">
+                                                {{ clientSecret.value }}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-autocomplete #auto="matAutocomplete"
+                                            (optionSelected)="selectedClientScope($event)">
+                                            <mat-option *ngFor="let scope of filteredScopes | async" [value]="scope">
+                                                {{scope}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <input placeholder="Add scope" #scopeInput [formControl]="scopeControl"
+                                            [matAutocomplete]="auto" [matChipInputFor]="scopeList"
+                                            [matChipInputAddOnBlur]="false">
+                                        <mat-label>Client Scopes</mat-label>
+                                        <mat-chip-list #scopeList class="mat-chip-list-stacked" aria-orientation="vertical">
+                                            <mat-chip *ngFor="let scope of client.allowedScopes" [removable]="true"
+                                                (removed)="remove(scope, client.allowedScopes)">
+                                                {{ scope.scope }}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                            <input matInput placeholder="Add cors origin"
+                                                [matChipInputFor]="allowedCorsOrigins"
+                                                [matChipInputSeparatorKeyCodes]="enterKeyCode"
+                                                [matChipInputAddOnBlur]="true"
+                                                (matChipInputTokenEnd)="add($event, client.allowedCorsOrigins, 'origin')">
+                                            <mat-label>Client Cors Origins</mat-label>
+                                            <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical"
+                                                #allowedCorsOrigins>
+                                                <mat-chip *ngFor="let corsOrigin of client.allowedCorsOrigins"
+                                                    [removable]="true"
+                                                    (removed)="remove(corsOrigin, client.allowedCorsOrigins)">
+                                                    {{ corsOrigin.origin }}
+                                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                                </mat-chip>
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                                <input matInput placeholder="Add IdP restriction"
+                                                    [matChipInputFor]="identityProviderRestrictions"
+                                                    [matChipInputSeparatorKeyCodes]="enterKeyCode"
+                                                    [matChipInputAddOnBlur]="true"
+                                                    (matChipInputTokenEnd)="add($event, client.identityProviderRestrictions, 'provider')">
+                                                <mat-label>Identity Provider Restrictions</mat-label>
+                                                <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical"
+                                                    #identityProviderRestrictions>
+                                                    <mat-chip *ngFor="let idpRestriction of client.identityProviderRestrictions"
+                                                        [removable]="true"
+                                                        (removed)="remove(idpRestriction, client.identityProviderRestrictions)">
+                                                        {{ idpRestriction.provider }}
+                                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                                    </mat-chip>
+                                                </mat-chip-list>
+                                            </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <br>
+            <br>
+            <button mat-stroked-button type="submit" [disabled]="!clientForm.valid || submitted" (click)="this.onSubmit()" color="warn" #saveButton name="saveButton">Save</button>
+            <button mat-stroked-button type="submit" (click)="this.onCancel()" color="warn">Cancel</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

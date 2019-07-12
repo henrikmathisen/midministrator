@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.third-width {
+    width: 33%;
+}
+
+.form-group-style {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group-style > * {
+    width: 100%;
+  }
+
+  .fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+  }

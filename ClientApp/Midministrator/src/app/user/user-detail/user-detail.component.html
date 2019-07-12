@@ -1,0 +1,259 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title *ngIf="!user">
+            Loading...
+        </mat-card-title>
+        <mat-card-title *ngIf="user">
+            Editing {{ user.userName }}
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div>
+            <div fxLayout="row wrap" layout-wrap *ngIf="user">
+                <div fxFlex="13">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <span class="full-width">
+                                    <div *ngIf="user.passwordChanged">
+                                        Password Changed: {{ user.passwordChanged }}
+                                    </div>
+                                    <div *ngIf="!user.passwordChanged">
+                                        Password Changed: Never
+                                    </div>
+                                    <br>
+                                </span>
+                                <span class="full-width">
+                                    <button mat-stroked-button color="primary" (click)="onPasswordReset($event)">
+                                        Send password reset link
+                                    </button>
+                                </span>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div fxFlex="13">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <mat-label>
+                                        Default Tenant
+                                    </mat-label>
+                                    <mat-select [(ngModel)]="user.defaultTenantId" name="defaultTenantId"
+                                        #defaultTenantId="ngModel">
+                                        <mat-option [value]="null">Clear...</mat-option>
+                                        <mat-option *ngFor="let tenant of tenants" [value]="tenant.id">
+                                            {{ tenant.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div fxFlex="13">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <mat-label>
+                                        Social Security Number
+                                    </mat-label>
+                                    <input matInput [(ngModel)]="user.socialSecurityNumber" name="socialSecurityNumber"
+                                        #socialSecurityNumber="ngModel">
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+
+                <div fxFlex="13">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <mat-label>
+                                        Princess User Id
+                                    </mat-label>
+                                    <input matInput type="number" [(ngModel)]="user.legacyAccount.princessUserId"
+                                        name="princessUserId" #princessUserId="ngModel">
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div fxFlex="13">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <mat-label>
+                                        Collab Agent Id
+                                    </mat-label>
+                                    <input matInput type="number" [(ngModel)]="user.legacyAccount.agentId"
+                                        name="agentId" #agentId="ngModel">
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+                <div fxFlex="13">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <mat-label>
+                                        Last Updated
+                                    </mat-label>
+                                    <input matInput [(ngModel)]="user.updated" name="updated" #updated="ngModel"
+                                        readonly="true">
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div>
+                <mat-card class="client-container">
+                    <mat-card-header>
+                        <mat-card-title>
+                            Groups
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="sixteenpix">
+                        <br>
+                        <div fxLayout="row wrap" layout-wrap>
+                            <div fxFlex="10" *ngFor="let group of groups">
+                                <mat-list>
+                                    <div>
+                                        <mat-list-item>
+                                            {{ group.name }}
+                                        </mat-list-item>
+                                    </div>
+                                </mat-list>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div>
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>
+                            Application Roles Inherited From Groups
+                        </mat-card-title>
+                    </mat-card-header>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Go to groups to administer group roles
+                    <mat-card-content *ngIf="groupRoles">
+                        <br>
+                        <!-- <mat-divider></mat-divider> -->
+                        <div fxLayout="row wrap" layout-wrap >
+                            <mat-list *ngFor="let groupRole of groupRoles" fxFlex="15">
+                                <h2 mat-subheader style="font-size: 18px;">{{groupRole.name}}</h2>
+                                <mat-list-item *ngFor="let appRole of groupRole.applicationRoles; let i = index;">
+                                    <h3 matLine>
+                                        &nbsp;&nbsp;&nbsp;{{ getApplicationName(appRole.applicationId) }}
+                                        <p matLine>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{ getRoleName(appRole.roleId) }}</i>
+                                        </p>
+                                    </h3>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+            <div>
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>
+                            User Specific Roles
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <table mat-table [dataSource]="roleTableSource" class="full-width">
+                            <ng-container matColumnDef="role">
+                                <th mat-header-cell *matHeaderCellDef> Role </th>
+                                <td mat-cell *matCellDef="let applicationRole; let i = index;">
+                                    <mat-select [(ngModel)]="user.applicationRoles[i].roleId" name="roleId"
+                                        #roleId="ngModel"
+                                        (valueChange)="onRoleValueChanged($event, user.applicationRoles[i])">
+                                        <mat-option *ngFor="let role of roles" [value]="role.id">
+                                            {{ role.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="application">
+                                <th mat-header-cell *matHeaderCellDef> Application </th>
+                                <td mat-cell *matCellDef="let appRole; let i = index;">
+                                    <mat-select [(ngModel)]="user.applicationRoles[i].applicationId"
+                                        name="applicationId" required>
+                                        <mat-option *ngFor="let application of applications" [value]="application.id">
+                                            {{application.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="tenant">
+                                <th mat-header-cell *matHeaderCellDef style="min-width: 100px;"> Tenant <br> (Will
+                                    restrict
+                                    role to the tenant) </th>
+                                <td mat-cell *matCellDef="let appRole; let i = index;" style="min-width: 100px;">
+                                    <mat-select [(ngModel)]="user.applicationRoles[i].tenantId"
+                                        name="applicationRoleTenant">
+                                        <mat-option [value]="null">Clear...</mat-option>
+                                        <mat-option *ngFor="let tenant of this.tenants" [value]="tenant.id">
+                                            {{tenant.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="remove">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let appRole">
+                                    <!-- <span class="fill-remaining-space"></span> -->
+                                    <button mat-stroked-button color="primary" [disabled]="appRole.groupId"
+                                        (click)="onRemoveApplicationRole(appRole)">Remove</button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="roleTableColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: roleTableColumns;"></tr>
+                        </table>
+                        <span class="full-width">
+                            <button mat-stroked-button color="primary" (click)="onAddApplicationRole()">Add New
+                                Role</button>
+                        </span>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+
+        </div>
+
+        <mat-card-actions>
+            <br>
+            <br>
+            <button mat-stroked-button type="submit" (click)="this.onSubmit()" color="warn" #saveButton
+                name="saveButton">Save</button>
+            <button mat-stroked-button type="submit" (click)="this.onCancel()" color="warn">Cancel</button>
+            <span class="fill-remaining-space"></span>
+            <button mat-stroked-button (click)="this.onRevokeUserGrants($event, user.id)" color="Primary">Revoke Active Grants</button>
+        </mat-card-actions>
+
+    </mat-card-content>
+</mat-card>

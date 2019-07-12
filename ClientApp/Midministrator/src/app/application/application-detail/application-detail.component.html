@@ -1,0 +1,66 @@
+<mat-card *ngIf="!application">
+    <mat-card-header>
+        <mat-card-title>
+            Loading...
+        </mat-card-title>
+    </mat-card-header>
+</mat-card>
+<mat-card *ngIf="application">
+    <form #applicationForm="ngForm" name="applicationForm">
+        <mat-card-header>
+            <mat-card-title *ngIf="application.id > 0">
+                Editing {{ application.name }}
+            </mat-card-title>
+            <mat-card-title *ngIf="application.id < 1">
+                New application
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <br>
+            <div fxLayout="row wrap" layout-wrap fxLayoutGap="1%">
+                <div fxFlex="49" fxFlex.lt-lg="98">
+                    <mat-card class="application-container">
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <input matInput placeholder="Name" [(ngModel)]="application.name" #name="ngModel"
+                                        name="name" required>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Url" [(ngModel)]="application.url" #url="ngModel"
+                                        name="url">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>
+                                        Client
+                                    </mat-label>
+                                    <mat-select [(ngModel)]="application.clientId" [(value)]="application.clientId" 
+                                    name="clientId" #clientId="ngModel" (selectionChange)="onClientSelection($event)" required>
+                                        <mat-option *ngFor="let client of availableClients" [value]="client.id">
+                                            {{ client.clientName }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox matCheckbox [(ngModel)]="application.isDeleted" #isDeleted="ngModel"
+                                    name="isDeleted">Deleted</mat-checkbox>
+                                <mat-form-field *ngIf="application.deleted">
+                                    <mat-label>Deleted Date</mat-label>
+                                    <input matInput readonly="true" [(ngModel)]="application.deleted" #deleted="ngModel"
+                                        name="deleted">
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <br>
+            <br>
+            <button mat-stroked-button type="submit" [disabled]="!applicationForm.valid || submitted"
+                (click)="this.onSubmit()" color="warn" #saveButton name="saveButton">Save</button>
+            <button mat-stroked-button type="submit" (click)="this.onCancel()" color="warn">Cancel</button>
+        </mat-card-actions>
+    </form>
+</mat-card>
