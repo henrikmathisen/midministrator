@@ -21,10 +21,9 @@ export class RoleDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log(id);
     if (id > 0) {
       this.roleService.getRole(id).subscribe({
-        next: role => { this.role = role; console.log(role); },
+        next: role => { this.role = role; },
         error: msg => { console.error(msg); }
       });
     } else {

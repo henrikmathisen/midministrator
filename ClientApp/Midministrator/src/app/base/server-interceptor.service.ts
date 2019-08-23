@@ -14,11 +14,9 @@ export class ServerInterceptorService implements HttpInterceptor  {
         return next.handle(req)
         .pipe(tap(
            ev => {
-             console.log("default");
-            console.log(ev);
            },
            error => {
-            console.log(error);
+            console.error(error);
             if (error && error.status === 401) {
               window.location.reload();
             }

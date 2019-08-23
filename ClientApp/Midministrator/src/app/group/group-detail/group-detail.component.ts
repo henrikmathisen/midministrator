@@ -45,7 +45,6 @@ export class GroupDetailComponent implements OnInit {
       this.groupService.getGroup(id).subscribe({
         next: group => 
         { 
-          console.log(group); 
           this.group = group; 
           this.roleTableSource = new MatTableDataSource(group.applicationRoles.filter(p => !p.isDeleted && p.isActive));
         },
@@ -60,7 +59,6 @@ export class GroupDetailComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    console.log(this.group);
     this.groupService.updateGroup(this.group).subscribe({
       next: group => { this.group = group; this.roleTableSource.data = group.applicationRoles.filter(p => !p.isDeleted && p.isActive); this.submitted = false; },
       error: msg => { console.error(msg); this.submitted = false; }
@@ -96,7 +94,6 @@ export class GroupDetailComponent implements OnInit {
       role: null,
       application: null
     });
-    console.log(this.group.applicationRoles);
     this.roleTableSource.data = this.group.applicationRoles.filter(p => !p.isDeleted && p.isActive);
   }
 

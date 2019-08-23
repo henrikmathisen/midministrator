@@ -39,12 +39,4 @@ export class ClientListComponent implements OnInit {
     })
   }
 
-  onEditClientClick(client: Client): void {
-    console.log(client);
-  }
-
-  onNewClientClick(): void {
-    console.log("new client");
-  }
-
 }

@@ -37,10 +37,9 @@ export class ClientDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log(id);
     if (id > 0) {
       this.clientService.getClient(id).subscribe({
-        next: value => { this.client = value.client; this.availableScopes = value.availableScopes; console.log(value); },
+        next: value => { this.client = value.client; this.availableScopes = value.availableScopes; },
         error: msg => console.error(msg)
       });
     } else {
@@ -108,7 +107,6 @@ export class ClientDetailComponent implements OnInit {
   }
 
   remove(value: any, arr: any[]): void {
-    console.log(value);
     const idx = arr.indexOf(value);
     if (idx >= 0) {
       arr.splice(idx, 1);

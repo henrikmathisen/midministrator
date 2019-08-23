@@ -1,0 +1,113 @@
+<mat-card *ngIf="!apiResource">
+    <mat-card-header>
+        <mat-card-title>
+            Loading...
+        </mat-card-title>
+    </mat-card-header>
+</mat-card>
+<mat-card *ngIf="apiResource">
+    <mat-card-header>
+        <mat-card-title *ngIf="apiResource.id">
+            Editing {{ apiResource.displayName }}
+        </mat-card-title>
+        <mat-card-title *ngIf="!apiResource.id">
+            New Api Resource
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form #apiResourceForm="ngForm" name="apiResourceForm">
+            <div fxLayout="row wrap" layout-wrap fxLayoutGap="1%">
+                <div fxFlex="49" fxFlex.lt-lg="98">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <input matInput placeholder="Name" [(ngModel)]="apiResource.name" #name="ngModel"
+                                        name="name" required>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Display Name" [(ngModel)]="apiResource.displayName"
+                                        #displayName="ngModel" name="displayName" required>
+                                </mat-form-field>
+                                <mat-checkbox matCheckbox [(ngModel)]="apiResource.enabled" #enabled="ngModel"
+                                    name="enabled">
+                                    Enabled</mat-checkbox>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div fxFlex="49" fxFlex.lt-lg="98">
+                    <mat-card>
+                        <mat-card-content>
+                            <div class="form-group-style">
+
+
+
+                                <mat-form-field>
+                                    <input matInput placeholder="Updated" readonly="true"
+                                        [(ngModel)]="apiResource.updated" #updated="ngModel" name="updated">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <textarea rows="3" matInput placeholder="Description" [(ngModel)]="apiResource.description"
+                                        #description="ngModel" name="description">
+                        </textarea>
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div fxFlex="100" class="form-group-style">
+                        <mat-form-field>
+                                <input matInput placeholder="API Claims" [matChipInputFor]="apiClaims"
+                                    [matChipInputSeparatorKeyCodes]="enterKeyCode" [matChipInputAddOnBlur]="true"
+                                    (matChipInputTokenEnd)="addClaim($event)" trim>
+                                <mat-chip-list #apiClaims>
+                                    <mat-chip *ngFor="let apiClaim of apiResource.userClaims" [removable]="true"
+                                        (removed)="removeClaim(apiClaim)">
+                                        {{ apiClaim.type }}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </mat-form-field>
+                </div>
+                <div fxFlex="100" class="form-group-style">
+                        <mat-form-field>
+                                <input matInput placeholder="Secrets" #secret [matChipInputFor]="secrets" minlength="16"
+                                    [matChipInputSeparatorKeyCodes]="enterKeyCode" [matChipInputAddOnBlur]="true"
+                                    (matChipInputTokenEnd)="addSecret($event)" trim>
+                                    <mat-hint align="start"><strong>Needs to be at least 16 characters</strong> </mat-hint>
+                                    <mat-hint align="end"> {{secret.value.length}} / 16</mat-hint>
+                                <mat-chip-list #secrets>
+                                    <mat-chip *ngFor="let secret of apiResource.secrets" [removable]="true"
+                                        (removed)="removeSecret(secret)">
+                                        {{ secret.value }}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </mat-form-field>
+                </div>
+                <div fxFlex="100">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>
+                                API Scopes
+                            </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <api-scopes [apiResource]="apiResource" name="scopes"></api-scopes>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <br>
+            <mat-card-actions>
+                    <button mat-stroked-button [disabled]="!apiResourceForm.valid || submitted"
+                    (click)="this.onSubmit()" color="warn" #saveButton name="saveButton">Save</button>
+                <button mat-stroked-button (click)="this.onCancel()" color="warn">Cancel</button>
+            </mat-card-actions>
+        </form>
+        <mat-card-footer>
+            
+        </mat-card-footer>
+    </mat-card-content>
+</mat-card>

@@ -105,7 +105,7 @@
                     </mat-card>
                 </div>
 
-                <div fxFlex="13">
+                <div fxFlex="20">
                     <mat-card>
                         <mat-card-content class="sixteenpix">
                             <br>
@@ -117,6 +117,11 @@
                                     <input matInput [(ngModel)]="user.updated" name="updated" #updated="ngModel"
                                         readonly="true">
                                 </mat-form-field>
+                                <span class="full-width">
+                                    <button mat-stroked-button color="primary" (click)="onUpdateUserFromO365($event)">
+                                        Get Latest From O365
+                                    </button>
+                                </span>
                             </div>
                         </mat-card-content>
                     </mat-card>
@@ -156,7 +161,7 @@
                     <mat-card-content *ngIf="groupRoles">
                         <br>
                         <!-- <mat-divider></mat-divider> -->
-                        <div fxLayout="row wrap" layout-wrap >
+                        <div fxLayout="row wrap" layout-wrap>
                             <mat-list *ngFor="let groupRole of groupRoles" fxFlex="15">
                                 <h2 mat-subheader style="font-size: 18px;">{{groupRole.name}}</h2>
                                 <mat-list-item *ngFor="let appRole of groupRole.applicationRoles; let i = index;">
@@ -252,7 +257,8 @@
                 name="saveButton">Save</button>
             <button mat-stroked-button type="submit" (click)="this.onCancel()" color="warn">Cancel</button>
             <span class="fill-remaining-space"></span>
-            <button mat-stroked-button (click)="this.onRevokeUserGrants($event, user.id)" color="Primary">Revoke Active Grants</button>
+            <button mat-stroked-button (click)="this.onRevokeUserGrants($event, user.id)" color="Primary">Revoke Active
+                Grants</button>
         </mat-card-actions>
 
     </mat-card-content>

@@ -7,13 +7,14 @@ import { ApplicationService } from 'src/app/services/application/application.ser
 import { RoleService } from 'src/app/services/role/role.service';
 import { Application } from 'src/app/models/application';
 import { Role } from 'src/app/models/role';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Group } from 'src/app/models/group';
 import { ApplicationRole } from 'src/app/models/application-role';
 import { TenantService } from 'src/app/services/tenant/tenant.service';
 import { Tenant } from 'src/app/models/tenant';
 import { GrantService } from 'src/app/services/grant/grant.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -34,7 +35,7 @@ export class UserDetailComponent implements OnInit {
 
   constructor(public userService: UserService, private route: ActivatedRoute, private location: Location,
     private applicationService: ApplicationService, private roleService: RoleService, private tenantService: TenantService,
-    private grantService: GrantService, private spinnerService: SpinnerService) {
+    private grantService: GrantService, private spinnerService: SpinnerService, private dialog: MatDialog) {
 
   }
 
@@ -52,8 +53,7 @@ export class UserDetailComponent implements OnInit {
       });
       this.userService.getUser(id).subscribe({
         next: user => 
-        { 
-          console.log(user); 
+        {
           this.user = user; 
           this.groups = user.accountGroups.map(x => x.group);
           this.roleTableSource = new MatTableDataSource(user.applicationRoles.filter(p => !p.isDeleted && p.isActive));
@@ -81,8 +81,6 @@ export class UserDetailComponent implements OnInit {
   }
 
   onPasswordReset(event: any): void {
-    console.log(event);
-    console.log(event.path[1]);
     event.path[1].disabled = true;
     this.userService.resetPassword(this.user.userName).subscribe({
       next: msg => { event.path[0].innerText = 'Password reset link sent'; }
@@ -111,7 +109,6 @@ export class UserDetailComponent implements OnInit {
       isDeleted: false,
       created: new Date(Date.now())
     });
-    console.log(this.user.applicationRoles);
     this.roleTableSource.data = this.user.applicationRoles;
   }
 
@@ -123,17 +120,34 @@ export class UserDetailComponent implements OnInit {
     return this.roles.filter(x => x.id == id)[0].name;
   }
 
-  onRoleValueChanged(event: any, approle: any) : void {
-    console.log(event);
-    console.log(approle);
-  }
-
   onRevokeUserGrants(event: any, id: number): void {
-    console.log(event);
     this.spinnerService.spin$.next(true);
     this.grantService.removeGrantsForUser(id.toString()).subscribe({ 
       next: val => { this.spinnerService.spin$.next(false); event.path[0].innerText = "Grants Revoked"; },
       error: msg => { console.error(msg); this.spinnerService.spin$.next(false); }
+    });
+  }
+
+  onUpdateUserFromO365(event: any): void {
+    const path =  event.path[0];
+    this.spinnerService.spin$.next(true);
+    event.path[1].disabled = true;
+    this.userService.updateUserFromAzure(this.user).subscribe({
+      next: newValues => { 
+        this.user = newValues; 
+        this.spinnerService.spin$.next(false);
+        path.innerText = 'Get Latest From O365';
+      },
+      error: msg => { 
+        this.spinnerService.spin$.next(false);
+        console.error(msg); 
+        path.innerText = 'Get Latest From O365';
+        this.dialog.open(ErrorDialogComponent, {
+          data: {
+            error: msg.error
+          }
+        });
+      }
     });
   }
 

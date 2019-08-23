@@ -25,6 +25,14 @@ const routes: Routes = [
   {
     path: 'grants',
     loadChildren: () => import('./grant/grant.module').then(mod => mod.GrantModule)
+  },
+  {
+    path: 'apiresources',
+    loadChildren: () => import('./api-resource/api-resource.module').then(mod => mod.ApiResourceModule)
+  },
+  {
+    path: 'identityresources',
+    loadChildren: () => import('./identity-resource/identity-resource.module').then(mod => mod.IdentityResourceModule)
   }
 ];
 

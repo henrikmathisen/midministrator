@@ -49,12 +49,6 @@ export class UserListComponent implements OnInit {
       });
   }
 
-  ngAfterViewInit(): void {
-    this.sort.sortChange.subscribe({
-      next: ev => { console.log(ev); }
-    });
-  }
-
   onPage(event: PageEvent) {
     if (this.sort.direction) {
         this.dataSource.findUsers(this.filterString, this.sort.active, this.sort.direction, event.pageIndex + 1, event.pageSize);

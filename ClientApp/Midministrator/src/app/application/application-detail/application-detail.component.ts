@@ -29,7 +29,6 @@ export class ApplicationDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log(id);
     this.clientService.getClients().subscribe({
       next: clients => { this.availableClients = clients; },
       error: msg => 
@@ -37,13 +36,12 @@ export class ApplicationDetailComponent implements OnInit {
     })
     if (id > 0) {
       this.applicationService.getApplication(id).subscribe({
-        next: app => { this.application = app; console.log(app); },
+        next: app => { this.application = app; },
         error: msg => console.error(msg)
       });
     } else {
       this.application = new Application();
     }
-    console.log(this.applications);
   }
 
   onCancel(): void {
@@ -53,7 +51,6 @@ export class ApplicationDetailComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     this.application.client = null;
-    console.log(this.application);
     if (this.application.id < 1) {
       this.applicationService.createApplication(this.application).subscribe({
         next: resp => { this.location.back(); },

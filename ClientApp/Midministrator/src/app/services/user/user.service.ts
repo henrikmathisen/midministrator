@@ -41,10 +41,13 @@ export class UserService extends BaseHttpService {
   updateUser(user: MidentityAccount): Observable<MidentityAccount> {
     user.accountGroups = null;
     user.tenantAccounts = null;
-    
-    console.log(user);
     var model = JSON.stringify(user);
     return this.http.post<MidentityAccount>(`${this.apiUrl}/Update`, model, { headers: this.headers });
+  }
+
+  updateUserFromAzure(user: MidentityAccount): Observable<MidentityAccount> {
+    let model = JSON.stringify(user);
+    return this.http.post<MidentityAccount>(`${this.apiUrl}/UpdateFromO365`, model, { headers: this.headers });
   }
 
 }

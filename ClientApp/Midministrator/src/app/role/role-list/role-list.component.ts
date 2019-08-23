@@ -18,7 +18,7 @@ export class RoleListComponent implements OnInit {
 
   ngOnInit() {
     this.roleService.getRoles().subscribe({
-      next: roles => { console.log(roles); this.dataSource = new MatTableDataSource(roles); this.dataSource.sort = this.sort; },
+      next: roles => { this.dataSource = new MatTableDataSource(roles); this.dataSource.sort = this.sort; },
       error: msg => { console.error(msg) }
     })
   }

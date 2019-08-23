@@ -28,7 +28,6 @@ export class ApplicationListComponent implements OnInit {
     this.applicationService.getApplications().subscribe({
       next: apps => 
       { 
-        console.log(apps); 
         this.dataSource = new MatTableDataSource(apps);
         this.dataSource.sort = this.sort; 
         this.isLoadingResults = false;

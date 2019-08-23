@@ -1,0 +1,82 @@
+<mat-card *ngIf="!identityResource">
+        <mat-card-header>
+            <mat-card-title>
+                Loading...
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+    <mat-card *ngIf="identityResource">
+        <mat-card-header>
+            <mat-card-title *ngIf="identityResource.id">
+                Editing {{ identityResource.displayName }}
+            </mat-card-title>
+            <mat-card-title *ngIf="!identityResource.id">
+                New Identity Resource
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form #identityResourceForm="ngForm" name="identityResourceForm">
+                <div fxLayout="row wrap" layout-wrap fxLayoutGap="1%">
+                    <div fxFlex="49" fxFlex.lt-lg="98">
+                        <mat-card>
+                            <mat-card-content class="sixteenpix">
+                                <div class="form-group-style">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Name" [(ngModel)]="identityResource.name" #name="ngModel"
+                                            name="name" required>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Display Name" [(ngModel)]="identityResource.displayName"
+                                            #displayName="ngModel" name="displayName" required>
+                                    </mat-form-field>
+                                    <mat-checkbox matCheckbox [(ngModel)]="identityResource.enabled" #enabled="ngModel"
+                                        name="enabled">
+                                        Enabled</mat-checkbox>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div fxFlex="49" fxFlex.lt-lg="98">
+                        <mat-card>
+                            <mat-card-content>
+                                <div class="form-group-style">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Updated" readonly="true"
+                                            [(ngModel)]="identityResource.updated" #updated="ngModel" name="updated">
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <textarea rows="3" matInput placeholder="Description" [(ngModel)]="identityResource.description"
+                                            #description="ngModel" name="description">
+                            </textarea>
+                                    </mat-form-field>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div fxFlex="100" class="form-group-style">
+                            <mat-form-field>
+                                    <input matInput placeholder="Identity Claims" [matChipInputFor]="identityClaims"
+                                        [matChipInputSeparatorKeyCodes]="enterKeyCode" [matChipInputAddOnBlur]="true"
+                                        (matChipInputTokenEnd)="addClaim($event)" trim>
+                                    <mat-chip-list #identityClaims>
+                                        <mat-chip *ngFor="let identityClaim of identityResource.userClaims" [removable]="true"
+                                            (removed)="removeClaim(identityClaim)">
+                                            {{ identityClaim.type }}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </mat-form-field>
+                    </div>
+                </div>
+                <br>
+                <mat-card-actions>
+                        <button mat-stroked-button [disabled]="!identityResourceForm.valid || submitted"
+                        (click)="this.onSubmit()" color="warn" #saveButton name="saveButton">Save</button>
+                    <button mat-stroked-button (click)="this.onCancel()" color="warn">Cancel</button>
+                </mat-card-actions>
+            </form>
+            <mat-card-footer>
+                
+            </mat-card-footer>
+        </mat-card-content>
+    </mat-card>

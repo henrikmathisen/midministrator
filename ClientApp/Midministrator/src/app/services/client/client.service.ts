@@ -19,8 +19,6 @@ export class ClientService extends BaseHttpService {
 
   getClients(): Observable<Client[]> {
     var clients = this.http.get<Client[]>(this.clientApiUrl);
-    // clients.pipe(tap(_ => console.log(_)),
-    //   catchError(this.handleError<Client[]>('getClients', [])));
     return clients;
   }
 
@@ -34,7 +32,6 @@ export class ClientService extends BaseHttpService {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    console.log(body);
     return this.http.post(`${this.clientApiUrl}/Update`, body, { headers: headers, responseType: 'text' });
   }
 
