@@ -14,7 +14,7 @@ import { ENTER } from '@angular/cdk/keycodes';
 export class IdentityResourceDetailComponent implements OnInit {
 
   
-  private identityResource: IdentityResource;
+  identityResource: IdentityResource;
   
   readonly enterKeyCode: number[] = [ENTER];
   private submitted: boolean = false;
