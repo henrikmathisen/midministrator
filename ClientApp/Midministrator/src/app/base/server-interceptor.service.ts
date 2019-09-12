@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 
@@ -11,16 +11,11 @@ export class ServerInterceptorService implements HttpInterceptor  {
 
   public intercept(req: HttpRequest<any>,
     next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req)
-        .pipe(tap(
-           ev => {
-           },
-           error => {
-            console.error(error);
-            if (error && error.status === 401) {
-              window.location.reload();
-            }
-           }
-        ));
+      return next.handle(req).pipe(catchError(error => {
+        console.error("error intercepted");
+        console.error(error);
+        if (error.status && error.status === 401) window.location.reload();
+        return throwError(error);
+      }));
   }
 }

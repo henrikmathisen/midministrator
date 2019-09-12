@@ -8,6 +8,7 @@ import { MatChipInput, MatChipInputEvent, MatAutocomplete, MatAutocompleteSelect
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 
 @Component({
@@ -30,17 +31,19 @@ export class ClientDetailComponent implements OnInit {
   @ViewChild('scopeInput', { static: false }) scopeInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
-  constructor(public clientService: ClientService, private route: ActivatedRoute, private location: Location) {
+  constructor(public clientService: ClientService, private route: ActivatedRoute, private location: Location,
+    private spinner: SpinnerService) {
     this.filteredScopes = this.scopeControl.valueChanges.pipe(startWith(null),
       map((scope: string | null) => scope ? this._filter(scope, this.availableScopes) : this.availableScopes.slice()));
   }
 
   ngOnInit() {
+    this.spinner.spin$.next(true);
     const id = +this.route.snapshot.paramMap.get('id');
     if (id > 0) {
       this.clientService.getClient(id).subscribe({
-        next: value => { this.client = value.client; this.availableScopes = value.availableScopes; },
-        error: msg => console.error(msg)
+        next: value => { this.client = value.client; this.availableScopes = value.availableScopes; this.spinner.spin$.next(false); },
+        error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
       this.client = new Client();
@@ -52,16 +55,17 @@ export class ClientDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.spinner.spin$.next(true);
     this.submitted = true;
     if (this.client.id > 0) {
       this.clientService.updateClient(this.client).subscribe({
-        next: resp => { this.location.back(); },
-        error: msg =>  { console.error(msg); this.submitted = false; }
+        next: resp => { this.spinner.spin$.next(false); this.location.back();  },
+        error: msg =>  { this.spinner.spin$.next(false); console.error(msg); this.submitted = false; }
       });
     } else {
       this.clientService.createClient(this.client).subscribe({
-        next: resp => { this.location.back(); },
-        error: msg =>  { console.error(msg); this.submitted = false; }
+        next: resp => { this.spinner.spin$.next(false); this.location.back(); },
+        error: msg =>  { this.spinner.spin$.next(false); console.error(msg); this.submitted = false; }
       });
     }
   }

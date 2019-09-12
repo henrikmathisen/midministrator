@@ -9,6 +9,7 @@ import { MaterialModule } from '../material.module';
 import { IntegerToBooleanPipe } from '../shared/pipes/integer-to-boolean.pipe';
 import { FormsModule, ReactiveFormsModule, FormBuilder }    from '@angular/forms';
 import { ServerInterceptorService } from '../base/server-interceptor.service';
+import { SpinnerService } from '../services/spinner.service';
 
 @NgModule({
   declarations: [ClientListComponent, ClientDetailComponent, IntegerToBooleanPipe],
@@ -20,7 +21,7 @@ import { ServerInterceptorService } from '../base/server-interceptor.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ ClientService, FormBuilder,
+  providers: [ ClientService, FormBuilder, SpinnerService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: ServerInterceptorService,

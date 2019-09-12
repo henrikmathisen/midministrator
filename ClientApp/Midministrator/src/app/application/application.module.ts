@@ -9,6 +9,8 @@ import { FormsModule }  from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { ClientService } from '../services/client/client.service';
 import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.component';
+import { ServerInterceptorService } from '../base/server-interceptor.service';
+import { SpinnerService } from '../services/spinner.service';
 
 @NgModule({
   declarations: [ApplicationListComponent, ApplicationDetailComponent],
@@ -19,6 +21,12 @@ import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.compon
     MaterialModule,
     FormsModule
   ],
-  providers : [ ApplicationService, ClientService ]
+  providers : [ ApplicationService, ClientService, SpinnerService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerInterceptorService,
+      multi: true
+    }
+  ]
 })
 export class ApplicationModule { }

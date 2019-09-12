@@ -9,7 +9,8 @@ export class BaseHttpService {
 
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
   });
 
   constructor(public http: HttpClient) { }

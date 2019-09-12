@@ -3,6 +3,7 @@ import { ClientService } from 'src/app/services/client/client.service';
 import { Client } from 'src/app/models/client';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-client-list',
@@ -19,22 +20,20 @@ export class ClientListComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(public clientService: ClientService) { }
+  constructor(public clientService: ClientService, private spinner: SpinnerService) { }
 
   ngOnInit() {
     
   }
 
   ngAfterViewInit(): void {
-    // this.clientService.getClients().subscribe(data => {
-    //   this.dataSource.data = data;
-    //   this.dataSource.sort = this.sort;
-    // })
+    this.spinner.spin$.next(true);
     this.clientService.getClients().subscribe(
       {
       next: data => {
       this.dataSource.data = data;
       this.dataSource.sort = this.sort; 
+      this.spinner.spin$.next(false);
       }
     })
   }

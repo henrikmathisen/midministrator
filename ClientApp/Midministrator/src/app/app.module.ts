@@ -10,6 +10,8 @@ import { ServerInterceptorService } from './base/server-interceptor.service';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 import { MatSpinner } from '@angular/material';
+import { AuthGuardService } from './services/auth/auth-guard.service';
+import { AuthService } from './services/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,10 @@ import { MatSpinner } from '@angular/material';
     provide: HTTP_INTERCEPTORS,
     useClass: ServerInterceptorService,
     multi: true
-    }],
+    },
+    AuthGuardService,
+    AuthService
+  ],
   entryComponents: [ ErrorDialogComponent, MatSpinner ],
   bootstrap: [AppComponent]
 })

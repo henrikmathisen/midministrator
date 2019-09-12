@@ -5,6 +5,7 @@ import { IdentityResource, IdentityClaim } from 'src/app/models/identity-resourc
 import { Location } from '@angular/common';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER } from '@angular/cdk/keycodes';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-identity-resource-detail',
@@ -19,14 +20,16 @@ export class IdentityResourceDetailComponent implements OnInit {
   readonly enterKeyCode: number[] = [ENTER];
   private submitted: boolean = false;
   
-  constructor(public identityResourceService: IdentityResourceService, private location: Location, private route: ActivatedRoute) { }
+  constructor(public identityResourceService: IdentityResourceService, private location: Location, private route: ActivatedRoute,
+    private spinner: SpinnerService) { }
 
   ngOnInit() {
+    this.spinner.spin$.next(true);
     const id = +this.route.snapshot.paramMap.get('id');
     if (id > 0) {
       this.identityResourceService.getIdentityResource(id).subscribe({
-        next: resource => { this.identityResource = resource; },
-        error: msg =>  { console.error(msg); }
+        next: resource => { this.identityResource = resource; this.spinner.spin$.next(false); },
+        error: msg =>  { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
       this.identityResource = new IdentityResource();

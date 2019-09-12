@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { ApiScopesComponent } from '../api-scopes/api-scopes.component';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER } from '@angular/cdk/keycodes';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-api-resource-detail',
@@ -19,16 +20,18 @@ export class ApiResourceDetailComponent implements OnInit {
   readonly enterKeyCode: number[] = [ENTER];
   submitted: boolean = false;
 
-  constructor(public apiResourceService: ApiResourceService, private route: ActivatedRoute, private location: Location) {
+  constructor(public apiResourceService: ApiResourceService, private route: ActivatedRoute, private location: Location,
+    private spinner: SpinnerService) {
     
   }
 
   ngOnInit() {
+    this.spinner.spin$.next(true);
     const id = +this.route.snapshot.paramMap.get('id');
     if (id > 0) {
       this.apiResourceService.getApiResource(id).subscribe({
-        next: value => { this.apiResource = value; console.log(value); },
-        error: msg => console.error(msg)
+        next: value => { this.apiResource = value; this.spinner.spin$.next(false); },
+        error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
       this.apiResource = new ApiResource();
@@ -82,16 +85,17 @@ export class ApiResourceDetailComponent implements OnInit {
   }
 
   onSubmit() {
+    this.spinner.spin$.next(true);
     this.submitted = true;
     if (this.apiResource.id > 0) {
       this.apiResourceService.updateApiResource(this.apiResource).subscribe({
-        next: msg => { this.submitted = false; },
-        error: msg => { console.error(msg); this.submitted = false; }
+        next: msg => { this.submitted = false; this.spinner.spin$.next(false); },
+        error: msg => { console.error(msg); this.submitted = false; this.spinner.spin$.next(false); }
       });
     } else {
       this.apiResourceService.createApiResource(this.apiResource).subscribe({
-        next: msg => { this.submitted = false; this.location.back(); },
-        error: msg => { console.error(msg); this.submitted = false; }
+        next: msg => { this.submitted = false; this.spinner.spin$.next(false); this.location.back(); },
+        error: msg => { console.error(msg); this.submitted = false; this.spinner.spin$.next(false); }
       });
     }
   }

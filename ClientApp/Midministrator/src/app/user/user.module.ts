@@ -4,7 +4,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserRoutingModule } from './user-routing.module';
 import { UserService } from '../services/user/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from '../material.module';
 import { SpinnerService } from '../services/spinner.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { ApplicationService } from '../services/application/application.service'
 import { RoleService } from '../services/role/role.service';
 import { TenantService } from '../services/tenant/tenant.service';
 import { GrantService } from '../services/grant/grant.service';
+import { ServerInterceptorService } from '../base/server-interceptor.service';
 
 @NgModule({
   declarations: [UserDetailComponent, UserListComponent],
@@ -29,7 +30,12 @@ import { GrantService } from '../services/grant/grant.service';
     ApplicationService,
     RoleService,
     TenantService,
-    GrantService
+    GrantService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerInterceptorService,
+      multi: true
+    }
   ]
 })
 export class UserModule { }

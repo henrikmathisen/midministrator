@@ -25,7 +25,7 @@
                                     <br>
                                 </span>
                                 <span class="full-width">
-                                    <button mat-stroked-button color="primary" (click)="onPasswordReset($event)">
+                                    <button mat-stroked-button color="primary" [disabled]="passwordReset" (click)="onPasswordReset($event)">
                                         Send password reset link
                                     </button>
                                 </span>
@@ -72,7 +72,7 @@
                 </div>
 
 
-                <div fxFlex="13">
+                <div fxFlex="13" *ngIf="user.legacyAccount">
                     <mat-card>
                         <mat-card-content class="sixteenpix">
                             <br>
@@ -88,7 +88,7 @@
                         </mat-card-content>
                     </mat-card>
                 </div>
-                <div fxFlex="13">
+                <div fxFlex="13" *ngIf="user.legacyAccount">
                     <mat-card>
                         <mat-card-content class="sixteenpix">
                             <br>
@@ -118,7 +118,7 @@
                                         readonly="true">
                                 </mat-form-field>
                                 <span class="full-width">
-                                    <button mat-stroked-button color="primary" (click)="onUpdateUserFromO365($event)">
+                                    <button mat-stroked-button color="primary" [disabled]="updatingO365" (click)="onUpdateUserFromO365($event)">
                                         Get Latest From O365
                                     </button>
                                 </span>
@@ -160,11 +160,10 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Go to groups to administer group roles
                     <mat-card-content *ngIf="groupRoles">
                         <br>
-                        <!-- <mat-divider></mat-divider> -->
-                        <div fxLayout="row wrap" layout-wrap>
-                            <mat-list *ngFor="let groupRole of groupRoles" fxFlex="15">
+                        <div fxLayout="row wrap" layout-wrap *ngIf="groupRoles && applications">
+                            <mat-list *ngFor="let groupRole of groupRoles" fxFlex="15" >
                                 <h2 mat-subheader style="font-size: 18px;">{{groupRole.name}}</h2>
-                                <mat-list-item *ngFor="let appRole of groupRole.applicationRoles; let i = index;">
+                                <mat-list-item *ngFor="let appRole of groupRole.applicationRoles; let i = index;" >
                                     <h3 matLine>
                                         &nbsp;&nbsp;&nbsp;{{ getApplicationName(appRole.applicationId) }}
                                         <p matLine>
@@ -191,8 +190,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Role </th>
                                 <td mat-cell *matCellDef="let applicationRole; let i = index;">
                                     <mat-select [(ngModel)]="user.applicationRoles[i].roleId" name="roleId"
-                                        #roleId="ngModel"
-                                        (valueChange)="onRoleValueChanged($event, user.applicationRoles[i])">
+                                        #roleId="ngModel">
                                         <mat-option *ngFor="let role of roles" [value]="role.id">
                                             {{ role.name }}
                                         </mat-option>
@@ -257,7 +255,7 @@
                 name="saveButton">Save</button>
             <button mat-stroked-button type="submit" (click)="this.onCancel()" color="warn">Cancel</button>
             <span class="fill-remaining-space"></span>
-            <button mat-stroked-button (click)="this.onRevokeUserGrants($event, user.id)" color="Primary">Revoke Active
+            <button mat-stroked-button (click)="this.onRevokeUserGrants($event, user.id)" [disabled]="revokingGrants" color="Primary">Revoke Active
                 Grants</button>
         </mat-card-actions>
 

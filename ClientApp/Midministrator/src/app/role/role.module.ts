@@ -5,8 +5,10 @@ import { RoleRoutingModule } from './role-routing.module';
 import { RoleListComponent } from './role-list/role-list.component';
 import { RoleDetailComponent } from './role-detail/role-detail.component';
 import { RoleService } from '../services/role/role.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ServerInterceptorService } from '../base/server-interceptor.service';
+import { SpinnerService } from '../services/spinner.service';
 
 @NgModule({
   declarations: [RoleListComponent, RoleDetailComponent],
@@ -18,7 +20,13 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [
-    RoleService
+    RoleService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerInterceptorService,
+      multi: true
+    },
+    SpinnerService
   ]
 })
 export class RoleModule { }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { RoleService } from 'src/app/services/role/role.service';
 import { Role } from 'src/app/models/role';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-role-list',
@@ -14,12 +15,17 @@ export class RoleListComponent implements OnInit {
   displayedColumns = ['edit', 'name', 'created', 'modified', 'isDeleted'];
   @ViewChild(MatSort, {static: true }) sort: MatSort;
 
-  constructor(public roleService: RoleService) { }
+  constructor(public roleService: RoleService, private spinner: SpinnerService) { }
 
   ngOnInit() {
+    this.spinner.spin$.next(true);
     this.roleService.getRoles().subscribe({
-      next: roles => { this.dataSource = new MatTableDataSource(roles); this.dataSource.sort = this.sort; },
-      error: msg => { console.error(msg) }
+      next: roles => { 
+        this.dataSource = new MatTableDataSource(roles); 
+        this.dataSource.sort = this.sort; 
+        this.spinner.spin$.next(false);
+      },
+      error: msg => { console.error(msg); this.spinner.spin$.next(false); }
     })
   }
   ngAfterViewInit(): void {

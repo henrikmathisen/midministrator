@@ -8,6 +8,7 @@ import { ErrorMessage } from 'src/app/models/error-message';
 import { ClientService } from 'src/app/services/client/client.service';
 import { MatSelectChange, MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-application-detail',
@@ -23,11 +24,12 @@ export class ApplicationDetailComponent implements OnInit {
   errors: [];
 
   constructor(public applicationService: ApplicationService, public clientService: ClientService,
-     private route: ActivatedRoute, private location: Location, private dialog: MatDialog) {
+     private route: ActivatedRoute, private location: Location, private dialog: MatDialog, private spinner: SpinnerService) {
     
   }
 
   ngOnInit() {
+    this.spinner.spin$.next(true);
     const id = +this.route.snapshot.paramMap.get('id');
     this.clientService.getClients().subscribe({
       next: clients => { this.availableClients = clients; },
@@ -36,8 +38,8 @@ export class ApplicationDetailComponent implements OnInit {
     })
     if (id > 0) {
       this.applicationService.getApplication(id).subscribe({
-        next: app => { this.application = app; },
-        error: msg => console.error(msg)
+        next: app => { this.application = app; this.spinner.spin$.next(false); },
+        error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
       this.application = new Application();
@@ -49,15 +51,17 @@ export class ApplicationDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.spinner.spin$.next(true);
     this.submitted = true;
     this.application.client = null;
     if (this.application.id < 1) {
       this.applicationService.createApplication(this.application).subscribe({
-        next: resp => { this.location.back(); },
+        next: resp => { this.spinner.spin$.next(false); this.location.back(); },
         error: msg => 
         { 
           console.error(msg); 
           this.submitted = false; 
+          this.spinner.spin$.next(false);
           this.dialog.open(ErrorDialogComponent, {
             data: {
               error: msg.error,
@@ -68,9 +72,10 @@ export class ApplicationDetailComponent implements OnInit {
       });
     } else {
       this.applicationService.updateApplication(this.application).subscribe({
-        next: () => { this.location.back(); },
+        next: () => { this.spinner.spin$.next(false); this.location.back(); },
         error: msg => 
         { 
+          this.spinner.spin$.next(false);
           console.error(msg); 
           this.submitted = false; 
           this.dialog.open(ErrorDialogComponent, {

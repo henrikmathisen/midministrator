@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApplicationService } from 'src/app/services/application/application.service';
 import { Application } from 'src/app/models/application';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-application-list',
@@ -18,21 +19,23 @@ export class ApplicationListComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(public applicationService: ApplicationService) { }
+  constructor(public applicationService: ApplicationService, private spinner: SpinnerService) { }
 
   ngOnInit() {
     
   }
 
   ngAfterViewInit(): void {
+    this.spinner.spin$.next(true);
     this.applicationService.getApplications().subscribe({
       next: apps => 
       { 
         this.dataSource = new MatTableDataSource(apps);
         this.dataSource.sort = this.sort; 
         this.isLoadingResults = false;
+        this.spinner.spin$.next(false);
       },
-      error: msg => { console.error(msg); this.applications = []; this.isLoadingResults = false; }
+      error: msg => { console.error(msg); this.applications = []; this.isLoadingResults = false; this.spinner.spin$.next(false); }
     })
   }
 

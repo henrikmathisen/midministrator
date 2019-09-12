@@ -20,7 +20,8 @@ import {
   MatAutocompleteModule,
   MatDialogModule,
   MatProgressSpinnerModule,
-  MatDividerModule
+  MatDividerModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -50,7 +51,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MatDialogModule,
     MatProgressSpinnerModule,
     OverlayModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSnackBarModule
   ],
   exports: [
     MatSortModule,
