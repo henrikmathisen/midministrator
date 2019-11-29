@@ -12,5 +12,6 @@ export class Application {
     applicationRoles: ApplicationRole[];
     constructor() {
         this.id = 0;
+        this.applicationRoles = [];
     }
 }

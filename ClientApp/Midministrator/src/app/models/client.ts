@@ -83,7 +83,15 @@ export class Client {
         this.slidingRefreshTokenLifetime = 1296000;
         this.updateAccessTokenClaimsOnRefresh = true;
         this.deviceCodeLifetime = 300;
-        this.allowedScopes = [{ id: 0, clientId: this.id, scope: 'openid' }, { id: 0, clientId: this.id, scope: 'account' }]
+        this.allowedScopes = [{ id: 0, clientId: this.id, scope: 'openid' }, { id: 0, clientId: this.id, scope: 'account' }];
+        this.redirectUris = [];
+        this.clientSecrets = [];
+        this.allowedGrantTypes = [];
+        this.allowedCorsOrigins = [];
+        this.identityProviderRestrictions = [];
+        this.properties = [];
+        this.claims = [];
+        this.postLogoutRedirectUris = [];
     }
 }
 

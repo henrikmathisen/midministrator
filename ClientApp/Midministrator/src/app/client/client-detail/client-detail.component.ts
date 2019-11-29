@@ -46,6 +46,7 @@ export class ClientDetailComponent implements OnInit {
         error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
+      this.spinner.spin$.next(false);
       this.client = new Client();
     }
   }

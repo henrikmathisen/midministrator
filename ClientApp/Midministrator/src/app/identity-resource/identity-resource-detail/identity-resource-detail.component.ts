@@ -32,6 +32,7 @@ export class IdentityResourceDetailComponent implements OnInit {
         error: msg =>  { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
+      this.spinner.spin$.next(false);
       this.identityResource = new IdentityResource();
     }
   }

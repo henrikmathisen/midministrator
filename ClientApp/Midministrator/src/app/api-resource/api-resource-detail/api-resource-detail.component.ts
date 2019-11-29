@@ -34,6 +34,7 @@ export class ApiResourceDetailComponent implements OnInit {
         error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
+      this.spinner.spin$.next(false);
       this.apiResource = new ApiResource();
     }
   }
