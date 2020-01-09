@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { ClientView } from '../../models/client';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class ClientDetailComponent implements OnInit {
   submitted = false;
   client: Client;
   availableScopes = [];
+  clientView: ClientView;
   readonly accessTokenTypes: { value: number, type: string }[] = [
     { value: 0, type: 'JWT' },
     { value: 1, type: 'Reference' }
@@ -42,12 +44,12 @@ export class ClientDetailComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     if (id > 0) {
       this.clientService.getClient(id).subscribe({
-        next: value => { this.client = value.client; this.availableScopes = value.availableScopes; this.spinner.spin$.next(false); },
+        next: value => { this.client = value.client; this.availableScopes = value.availableScopes; this.clientView = value.clientView || {}; this.spinner.spin$.next(false); },
         error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
       this.clientService.getAvailableScopes().subscribe({
-        next: value => { this.availableScopes = value; this.spinner.spin$.next(false); this.client = new Client(); },
+        next: value => { this.availableScopes = value; this.spinner.spin$.next(false); this.client = new Client(); this.clientView = {}; },
         error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     }
@@ -61,12 +63,12 @@ export class ClientDetailComponent implements OnInit {
     this.spinner.spin$.next(true);
     this.submitted = true;
     if (this.client.id > 0) {
-      this.clientService.updateClient(this.client).subscribe({
+      this.clientService.updateClient({ client: this.client, clientView: this.clientView }).subscribe({
         next: resp => { this.spinner.spin$.next(false); this.location.back();  },
         error: msg =>  { this.spinner.spin$.next(false); console.error(msg); this.submitted = false; }
       });
     } else {
-      this.clientService.createClient(this.client).subscribe({
+      this.clientService.createClient({ client: this.client, clientView: this.clientView }).subscribe({
         next: resp => { this.spinner.spin$.next(false); this.location.back(); },
         error: msg =>  { this.spinner.spin$.next(false); console.error(msg); this.submitted = false; }
       });

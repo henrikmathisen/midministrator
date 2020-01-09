@@ -247,6 +247,11 @@
                                             </mat-chip>
                                         </mat-chip-list>
                                     </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Client View"
+                                        [(ngModel)]="clientView.viewName" #viewName="ngModel"
+                                        name="viewName">
+                                    </mat-form-field>
                                 </div>
                                 <div fxFlex="49" fxFlex.lt-lg="98" class="form-group-style">
                                     <mat-form-field>

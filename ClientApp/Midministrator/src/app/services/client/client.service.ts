@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Client, ClientViewModel } from '../../models/client';
+import { Client, ClientViewModel, ClientView } from '../../models/client';
 import { BaseHttpService } from '../base-http.service';
 
 @Injectable({
@@ -32,7 +32,7 @@ export class ClientService extends BaseHttpService {
     return this.http.get<string[]>(url);
   }
 
-  updateClient(client: Client): Observable<any> {
+  updateClient(client: ClientViewModel): Observable<any> {
     let body = JSON.stringify(client);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export class ClientService extends BaseHttpService {
     return this.http.post(`${this.clientApiUrl}/Update`, body, { headers: headers, responseType: 'text' });
   }
 
-  createClient(client: Client): Observable<Number> {
+  createClient(client: ClientViewModel): Observable<Number> {
     let body = JSON.stringify(client);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'

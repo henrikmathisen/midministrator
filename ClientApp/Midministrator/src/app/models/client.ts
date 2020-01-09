@@ -1,6 +1,7 @@
 export class ClientViewModel {
     client: Client;
-    availableScopes: string[];
+    availableScopes?: string[];
+    clientView: ClientView;
 }
 
 export class Client {
@@ -93,6 +94,12 @@ export class Client {
         this.claims = [];
         this.postLogoutRedirectUris = [];
     }
+}
+
+export interface ClientView {
+    id?: number;
+    clientId?: number;
+    viewName?: string;
 }
 
 export interface ClientIdPRestriction {
