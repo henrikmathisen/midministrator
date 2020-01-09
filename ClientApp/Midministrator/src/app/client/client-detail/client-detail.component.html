@@ -326,11 +326,9 @@
                 </div>
             </div>
         </mat-card-content>
-        <mat-card-actions>
-            <br>
-            <br>
-            <button mat-stroked-button type="submit" [disabled]="!clientForm.valid || submitted" (click)="this.onSubmit()" color="warn" #saveButton name="saveButton">Save</button>
-            <button mat-stroked-button type="submit" (click)="this.onCancel()" color="warn">Cancel</button>
+        <mat-card-actions style="margin-left:16px;" >
+            <button mat-stroked-button type="submit" [disabled]="!clientForm.valid || submitted" (click)="this.onSubmit()" color="warn" #saveButton name="saveButton"><b>Save</b></button>
+            <button style="margin-left:8px;" mat-stroked-button type="submit" (click)="this.onCancel()" color="warn"><b>Cancel</b></button>
         </mat-card-actions>
     </form>
 </mat-card>

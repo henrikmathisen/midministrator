@@ -27,6 +27,11 @@ export class ClientService extends BaseHttpService {
     return this.http.get<ClientViewModel>(url);
   }
 
+  getAvailableScopes(): Observable<string[]> {
+    const url = `${this.clientApiUrl}/scopes`;
+    return this.http.get<string[]>(url);
+  }
+
   updateClient(client: Client): Observable<any> {
     let body = JSON.stringify(client);
     let headers = new HttpHeaders({

@@ -1,5 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+//@import "~@angular/material/prebuilt-themes/purple-green.css";
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+body {
+  margin: 0;
+  background-color: #424242;
+}
+
+app-nav-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.app-style {
+  /* display: flex; */
+  /* flex-direction: column; */
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.docs-navbar-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+}
 
 .full-width {
     width: 100%;

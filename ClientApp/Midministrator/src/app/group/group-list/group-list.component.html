@@ -1,13 +1,8 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title *ngIf="!dataSource">
-            Loading...
-        </mat-card-title>
-    </mat-card-header>
     <mat-card-content>
 
-        <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <mat-form-field class="third-width">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
         </mat-form-field>
 
         <table mat-table [dataSource]="dataSource" class="full-width">
@@ -16,7 +11,7 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let group">
                     <span class="fill-remaining-space"></span>
-                    <button mat-stroked-button color="primary" [routerLink]="[group.id]">Edit</button>
+                    <button mat-stroked-button color="warn" [routerLink]="[group.id]">Edit</button>
                 </td>
             </ng-container>
 

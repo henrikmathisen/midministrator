@@ -35,12 +35,12 @@
                 </div>
             </div>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions style="margin-left: 16px;">
             <br>
             <br>
             <button mat-stroked-button type="submit" [disabled]="!roleForm.valid || submitted"
-                (click)="this.onSubmit()" color="warn" #saveButton name="saveButton">Save</button>
-            <button mat-stroked-button type="submit" (click)="this.onCancel()" color="warn">Cancel</button>
+                (click)="this.onSubmit()" color="warn" #saveButton name="saveButton"><b>Save</b></button>
+            <button style="margin-left:8px;" mat-stroked-button type="submit" (click)="this.onCancel()" color="warn"><b>Cancel</b></button>
         </mat-card-actions>
     </form>
 </mat-card>

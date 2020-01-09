@@ -46,8 +46,10 @@ export class ClientDetailComponent implements OnInit {
         error: msg => { console.error(msg); this.spinner.spin$.next(false); }
       });
     } else {
-      this.spinner.spin$.next(false);
-      this.client = new Client();
+      this.clientService.getAvailableScopes().subscribe({
+        next: value => { this.availableScopes = value; this.spinner.spin$.next(false); this.client = new Client(); },
+        error: msg => { console.error(msg); this.spinner.spin$.next(false); }
+      });
     }
   }
 
