@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { MatSpinner } from '@angular/material';
-import { BehaviorSubject } from 'rxjs'
-import { scan, map } from 'rxjs/operators'
+import { BehaviorSubject, timer } from 'rxjs'
+import { scan, map, debounce } from 'rxjs/operators'
 
 
 @Injectable({
@@ -18,6 +18,7 @@ export class SpinnerService {
   constructor(private overlay: Overlay) {
     this.spin$
       .asObservable()
+      .pipe(debounce(() => timer(225)))
       .pipe(
         map(val => val ? 1 : -1),
         scan((acc, one) => (acc + one) >= 0 ? acc + one : 0, 0)
@@ -39,7 +40,7 @@ export class SpinnerService {
       positionStrategy: this.overlay.position()
         .global()
         .centerHorizontally()
-        .centerVertically()
+        .centerVertically("-20%")
     });
   }
 
