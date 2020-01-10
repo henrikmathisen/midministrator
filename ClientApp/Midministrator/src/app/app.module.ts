@@ -12,6 +12,7 @@ import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.compone
 import { MatSpinner } from '@angular/material';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { AuthService } from './services/auth/auth.service';
+import { SpinnerService } from './services/spinner.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthService } from './services/auth/auth.service';
     multi: true
     },
     AuthGuardService,
-    AuthService
+    AuthService,
+    SpinnerService
   ],
   entryComponents: [ ErrorDialogComponent, MatSpinner ],
   bootstrap: [AppComponent]

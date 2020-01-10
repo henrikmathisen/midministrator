@@ -24,7 +24,7 @@ export class SpinnerService {
       )
       .subscribe(
         (res) => {
-          if (res === 1) { this.showSpinner() }
+          if (res === 1) { if (!this.spinner.hasAttached()) this.showSpinner() }
           else if (res == 0) {
             this.spinner.hasAttached() ? this.stopSpinner() : null;
           }

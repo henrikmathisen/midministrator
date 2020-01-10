@@ -3,14 +3,13 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTr
 import { AuthService } from './auth.service';
 import { AuthResult } from '../../models/auth-result';
 import { Observable } from 'rxjs';
-import { SpinnerService } from '../spinner.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate, CanLoad {
 
-  constructor(private authService: AuthService, private spinner: SpinnerService) { }
+  constructor(private authService: AuthService) { }
 
   canLoad(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> | Promise<boolean> {
     return this.getAuthPromise();
@@ -24,7 +23,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
     getAuthPromise(): Promise<boolean> {
       return this.authService.AuthStatus().toPromise().then(next => {
-        this.spinner.spin$.next(true);
         if (!next.loggedIn) {
           console.log("Not logged in.");
           window.location.reload();
@@ -34,11 +32,9 @@ export class AuthGuardService implements CanActivate, CanLoad {
           alert("Unauthorized.");
         }
         console.log(next);
-        this.spinner.spin$.next(false);
         return next.success;
       }, error => {
         console.error(error);
-        this.spinner.spin$.next(false);
         return false;
       });
     }
