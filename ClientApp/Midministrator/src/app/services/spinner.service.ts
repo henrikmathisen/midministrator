@@ -18,7 +18,6 @@ export class SpinnerService {
   constructor(private overlay: Overlay) {
     this.spin$
       .asObservable()
-      .pipe(debounce(() => timer(200)))
       .pipe(
         map(val => val ? 1 : -1),
         scan((acc, one) => (acc + one) >= 0 ? acc + one : 0, 0)
