@@ -98,13 +98,28 @@
                                         Collab Agent Id
                                     </mat-label>
                                     <input matInput type="number" [(ngModel)]="user.legacyAccount.agentId"
-                                        name="agentId" #agentId="ngModel">
+                                        name="agentId" #agentId="ngModel" >
                                 </mat-form-field>
                             </div>
                         </mat-card-content>
                     </mat-card>
                 </div>
-
+                <div fxFlex="13" *ngIf="user.legacyAccount">
+                    <mat-card>
+                        <mat-card-content class="sixteenpix">
+                            <br>
+                            <div class="form-group-style">
+                                <mat-form-field>
+                                    <mat-label>
+                                        HSA ID
+                                    </mat-label>
+                                    <input matInput [(ngModel)]="user.hsaId" readonly="true"
+                                        name="hsaId" #hsaId="ngModel" >
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
                 <div fxFlex="20">
                     <mat-card>
                         <mat-card-content class="sixteenpix">
