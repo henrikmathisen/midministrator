@@ -15,7 +15,7 @@ export class ApplicationListComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   resultsLength = 0;
   isLoadingResults = true;
-  displayedColumns: string[] = ['edit', 'name', 'clientName', 'isDeleted'  ];
+  displayedColumns: string[] = ['edit', 'name', 'clientIds', 'isDeleted'  ];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -30,6 +30,9 @@ export class ApplicationListComponent implements OnInit {
     this.applicationService.getApplications().subscribe({
       next: apps => 
       { 
+        apps.forEach(p => {
+          p.clientIds = p.clientApplications.reduce((a, o) => (a.push(o.client.clientId), a), []);
+        })
         this.dataSource = new MatTableDataSource(apps);
         this.dataSource.sort = this.sort; 
         this.isLoadingResults = false;

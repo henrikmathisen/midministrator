@@ -1,5 +1,6 @@
 import { ApplicationRole } from "./application-role";
 import { Client } from './client';
+import { ClientApplication } from './client-application';
 
 export class Application {
     id: number;
@@ -7,11 +8,12 @@ export class Application {
     isDeleted: boolean;
     name: string;
     url: string;
-    clientId: number;
-    client: Client;
+    clientApplications: ClientApplication[];
     applicationRoles: ApplicationRole[];
+  clientIds: any[];
     constructor() {
         this.id = 0;
         this.applicationRoles = [];
+        this.clientApplications = [];
     }
 }

@@ -19,9 +19,9 @@
             <td mat-cell *matCellDef="let application"> {{application.name}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="clientName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Name </th>
-            <td mat-cell *matCellDef="let application"> {{application.client.clientName}} </td>
+        <ng-container matColumnDef="clientIds">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Client ID(s) </th>
+            <td mat-cell *matCellDef="let application"> {{application.clientIds.join()}} </td>
         </ng-container>
 
         <ng-container matColumnDef="isDeleted">

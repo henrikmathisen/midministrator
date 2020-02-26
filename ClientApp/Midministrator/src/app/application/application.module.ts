@@ -5,7 +5,7 @@ import { ApplicationRoutingModule } from './application-routing.module';
 import { ApplicationListComponent } from './application-list/application-list.component';
 import { ApplicationDetailComponent } from './application-detail/application-detail.component';
 import { ApplicationService } from '../services/application/application.service';
-import { FormsModule }  from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder }    from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { ClientService } from '../services/client/client.service';
 import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.component';
@@ -19,9 +19,10 @@ import { SpinnerService } from '../services/spinner.service';
     ApplicationRoutingModule,
     HttpClientModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers : [ ApplicationService, ClientService, SpinnerService,
+  providers : [ ApplicationService, ClientService, SpinnerService, FormBuilder,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerInterceptorService,
