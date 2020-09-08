@@ -16,7 +16,7 @@ export class GroupService extends BaseHttpService {
   }
 
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(`${this.apiUrl}adfs`);
+    return this.http.get<Group[]>(`${this.apiUrl}/adfs`);
   }
 
   getGroup(id: number): Observable<Group> {
