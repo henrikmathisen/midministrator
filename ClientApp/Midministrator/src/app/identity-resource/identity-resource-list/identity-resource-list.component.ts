@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IdentityResourceService } from 'src/app/services/identity-resource/identity-resource.service';
 import { IdentityResource } from 'src/app/models/identity-resource';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({

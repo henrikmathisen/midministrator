@@ -3,7 +3,7 @@ import { IdentityResourceService } from 'src/app/services/identity-resource/iden
 import { ActivatedRoute } from '@angular/router';
 import { IdentityResource, IdentityClaim } from 'src/app/models/identity-resource';
 import { Location } from '@angular/common';
-import { MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { ENTER } from '@angular/cdk/keycodes';
 import { SpinnerService } from 'src/app/services/spinner.service';
 

@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserDataSource } from '../data/user-data-source';
-import { MatPaginator, MatSort, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { OverlayRef } from '@angular/cdk/overlay';

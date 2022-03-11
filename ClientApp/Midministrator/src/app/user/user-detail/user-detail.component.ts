@@ -7,7 +7,9 @@ import { ApplicationService } from 'src/app/services/application/application.ser
 import { RoleService } from 'src/app/services/role/role.service';
 import { Application } from 'src/app/models/application';
 import { Role } from 'src/app/models/role';
-import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { Group } from 'src/app/models/group';
 import { ApplicationRole } from 'src/app/models/application-role';
 import { TenantService } from 'src/app/services/tenant/tenant.service';

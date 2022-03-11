@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from 'src/app/services/group/group.service';
 import { Group } from 'src/app/models/group';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({

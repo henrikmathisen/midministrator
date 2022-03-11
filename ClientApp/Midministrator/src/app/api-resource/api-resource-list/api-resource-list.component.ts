@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiResource } from 'src/app/models/api-resource';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ApiResourceService } from 'src/app/services/api-resource/api-resource.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 

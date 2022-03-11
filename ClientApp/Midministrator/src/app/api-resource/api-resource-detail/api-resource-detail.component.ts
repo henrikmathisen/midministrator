@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiResource, ApiSecret, ApiResourceClaim } from 'src/app/models/api-resource';
 import { Location } from '@angular/common';
 import { ApiScopesComponent } from '../api-scopes/api-scopes.component';
-import { MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { ENTER } from '@angular/cdk/keycodes';
 import { SpinnerService } from 'src/app/services/spinner.service';
 

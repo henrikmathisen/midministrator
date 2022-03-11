@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RoleService } from 'src/app/services/role/role.service';
 import { Role } from 'src/app/models/role';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({

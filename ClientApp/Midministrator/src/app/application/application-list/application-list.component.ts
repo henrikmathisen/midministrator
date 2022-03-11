@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApplicationService } from 'src/app/services/application/application.service';
 import { Application } from 'src/app/models/application';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({

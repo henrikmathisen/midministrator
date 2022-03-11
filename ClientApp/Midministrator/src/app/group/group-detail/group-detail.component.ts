@@ -8,7 +8,7 @@ import { Application } from 'src/app/models/application';
 import { Role } from 'src/app/models/role';
 import { Tenant } from 'src/app/models/tenant';
 import { Group } from 'src/app/models/group';
-import { MatTableDataSource, MatTable } from '@angular/material';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ApplicationRole } from 'src/app/models/application-role';
 import { Location } from '@angular/common';
 import { MidentityAccount } from 'src/app/models/account';

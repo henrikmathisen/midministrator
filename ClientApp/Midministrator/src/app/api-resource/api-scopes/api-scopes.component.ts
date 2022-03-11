@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ApiScope, ApiResource, ApiScopeClaim } from 'src/app/models/api-resource';
-import { MatTableDataSource, MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatTableDataSource } from '@angular/material/table';
 import { ENTER } from '@angular/cdk/keycodes';
 
 @Component({
