@@ -15,29 +15,28 @@ import { AuthService } from './services/auth/auth.service';
 import { SpinnerService } from './services/spinner.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    ConfirmDialogComponent,
-    ErrorDialogComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MaterialModule,
-    BrowserAnimationsModule
-  ],
-  providers: [ 
-    {
-    provide: HTTP_INTERCEPTORS,
-    useClass: ServerInterceptorService,
-    multi: true
-    },
-    AuthGuardService,
-    AuthService,
-    SpinnerService
-  ],
-  entryComponents: [ ErrorDialogComponent, MatSpinner ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        ConfirmDialogComponent,
+        ErrorDialogComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MaterialModule,
+        BrowserAnimationsModule
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ServerInterceptorService,
+            multi: true
+        },
+        AuthGuardService,
+        AuthService,
+        SpinnerService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
