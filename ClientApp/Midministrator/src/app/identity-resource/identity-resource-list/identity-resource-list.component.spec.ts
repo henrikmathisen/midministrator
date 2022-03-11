@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IdentityResourceListComponent } from './identity-resource-list.component';
 
@@ -6,7 +6,7 @@ describe('IdentityResourceListComponent', () => {
   let component: IdentityResourceListComponent;
   let fixture: ComponentFixture<IdentityResourceListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ IdentityResourceListComponent ]
     })

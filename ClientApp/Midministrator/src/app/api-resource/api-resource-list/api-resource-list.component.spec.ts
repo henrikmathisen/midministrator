@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApiResourceListComponent } from './api-resource-list.component';
 
@@ -6,7 +6,7 @@ describe('ApiResourceListComponent', () => {
   let component: ApiResourceListComponent;
   let fixture: ComponentFixture<ApiResourceListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ApiResourceListComponent ]
     })
