@@ -30,7 +30,7 @@ export class ApplicationDetailComponent implements OnInit {
   filteredClients: Observable<Client[]>;
   clientControl = new FormControl();
   readonly enterKeyCode: number[] = [ENTER];
-  @ViewChild('clientInput', { static: false }) clientInput: ElementRef<HTMLInputElement>;
+  @ViewChild('clientInput') clientInput: ElementRef<HTMLInputElement>;
 
   constructor(public applicationService: ApplicationService, public clientService: ClientService,
      private route: ActivatedRoute, private location: Location, private dialog: MatDialog, private spinner: SpinnerService) {

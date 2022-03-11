@@ -30,8 +30,8 @@ export class ClientDetailComponent implements OnInit {
   readonly enterKeyCode: number[] = [ENTER];
   filteredScopes: Observable<string[]>;
   scopeControl = new FormControl();
-  @ViewChild('scopeInput', { static: false }) scopeInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
+  @ViewChild('scopeInput') scopeInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(public clientService: ClientService, private route: ActivatedRoute, private location: Location,
     private spinner: SpinnerService) {
