@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BaseHttpService } from '../base-http.service';
 import { Application } from 'src/app/models/application';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService extends BaseHttpService {
 
-  apiUrl = "api/applications";
+  apiUrl = `${environment.midentityUrl}/api/applications`;
   headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });

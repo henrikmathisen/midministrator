@@ -3,16 +3,17 @@ import { BaseHttpService } from '../base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tenant } from '../../models/tenant';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TenantService extends BaseHttpService {
 
-  private apiUrl = "api/tenant";
+  private apiUrl = `${environment.midentityUrl}/api/tenant`;
 
-  constructor(public http: HttpClient) 
-  { 
+  constructor(public http: HttpClient)
+  {
     super(http);
   }
 

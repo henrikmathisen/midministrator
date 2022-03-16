@@ -3,15 +3,16 @@ import { BaseHttpService } from '../base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Group } from 'src/app/models/group';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService extends BaseHttpService {
 
-  private apiUrl = 'api/groups';
+  private apiUrl = `${environment.midentityUrl}/api/groups`;
 
-  constructor(public http: HttpClient) { 
+  constructor(public http: HttpClient) {
     super(http);
   }
 

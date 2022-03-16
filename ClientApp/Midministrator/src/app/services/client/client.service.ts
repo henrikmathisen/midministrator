@@ -4,16 +4,17 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Client, ClientViewModel, ClientView } from '../../models/client';
 import { BaseHttpService } from '../base-http.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService extends BaseHttpService {
-  private clientApiUrl = 'api/clients';
+  private clientApiUrl = `${environment.midentityUrl}/api/clients`;
 
   constructor(
     public http: HttpClient
-  ) { 
+  ) {
     super(http);
   }
 
@@ -48,6 +49,6 @@ export class ClientService extends BaseHttpService {
     return this.http.post<Number>(`${this.clientApiUrl}/Create`, body, { headers: headers });
   }
 
-  
+
 }
 

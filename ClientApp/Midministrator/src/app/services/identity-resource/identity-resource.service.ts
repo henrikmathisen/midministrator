@@ -3,6 +3,7 @@ import { BaseHttpService } from '../base-http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IdentityResource } from '../../models/identity-resource';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -10,11 +11,11 @@ import { Observable } from 'rxjs';
 })
 export class IdentityResourceService extends BaseHttpService {
 
-  private identityResourceUrl = 'api/identityresources';
+  private identityResourceUrl = `${environment.midentityUrl}/api/identityresources`;
 
   constructor(
     public http: HttpClient
-  ) { 
+  ) {
     super(http);
   }
 

@@ -5,16 +5,17 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PagingModel } from '../../models/paging-model';
 import { MidentityAccount } from 'src/app/models/account';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseHttpService {
 
-  apiUrl = 'api/user';
+  apiUrl = `${environment.midentityUrl}/api/user`;
 
-  constructor(public http: HttpClient) 
-  { 
+  constructor(public http: HttpClient)
+  {
     super(http);
   }
 

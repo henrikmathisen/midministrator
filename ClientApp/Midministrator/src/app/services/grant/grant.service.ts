@@ -4,16 +4,17 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Grant } from '../../models/grant';
 import { Observable } from 'rxjs';
 import { PagingModel } from '../../models/paging-model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrantService extends BaseHttpService {
 
-  private apiUrl = "api/grants";
+  private apiUrl = `${environment.midentityUrl}/api/grants`;
 
-  constructor(public http: HttpClient) 
-  { 
+  constructor(public http: HttpClient)
+  {
     super(http);
   }
 

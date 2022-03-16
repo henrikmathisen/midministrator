@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from './auth-config';
 import { SpinnerService } from './services/spinner.service';
 
 @Component({
@@ -8,7 +10,16 @@ import { SpinnerService } from './services/spinner.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private router: Router, private spinner: SpinnerService) {
+  constructor(private router: Router, private spinner: SpinnerService, private authService: OAuthService ) {
+    this.authService.configure(authCodeFlowConfig);
+    this.authService.loadDiscoveryDocument().then(discoveryDoc => {
+      if (!this.authService.hasValidAccessToken()) {
+        this.authService.initLoginFlowInPopup();
+      } else {
+        this.authService.setupAutomaticSilentRefresh();
+      }
+    });
+
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         spinner.spin$.next(true);

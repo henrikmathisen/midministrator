@@ -3,20 +3,21 @@ import { BaseHttpService } from '../base-http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiResource } from '../../models/api-resource';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiResourceService extends BaseHttpService {
-  private apiResourceUrl = 'api/apiresources';
+  private apiResourceUrl = `${environment.midentityUrl}/api/apiresources`;
 
   constructor(
     public http: HttpClient
-  ) { 
+  ) {
     super(http);
   }
 
-  
+
   getApiResources(): Observable<ApiResource[]> {
     var clients = this.http.get<ApiResource[]>(this.apiResourceUrl);
     return clients;
@@ -41,6 +42,6 @@ export class ApiResourceService extends BaseHttpService {
     });
     return this.http.post<Number>(`${this.apiResourceUrl}/Create`, body, { headers: headers });
   }
-  
+
 }
 

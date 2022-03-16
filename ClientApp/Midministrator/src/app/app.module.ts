@@ -13,6 +13,12 @@ import { MatSpinner } from '@angular/material/progress-spinner';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { AuthService } from './services/auth/auth.service';
 import { SpinnerService } from './services/spinner.service';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
+import { environment } from 'src/environments/environment';
+
+export function storageFactory() : OAuthStorage {
+  return localStorage
+}
 
 @NgModule({
     declarations: [
@@ -25,17 +31,24 @@ import { SpinnerService } from './services/spinner.service';
         BrowserModule,
         AppRoutingModule,
         MaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        OAuthModule.forRoot({
+          resourceServer: {
+            allowedUrls: [ `${environment.midentityUrl}/api`, ],
+            sendAccessToken: true
+          },
+        })
     ],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ServerInterceptorService,
-            multi: true
-        },
-        AuthGuardService,
-        AuthService,
-        SpinnerService
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: ServerInterceptorService,
+        //     multi: true
+        // },
+        // AuthGuardService,
+        // AuthService,
+        SpinnerService,
+         { provide: OAuthStorage, useFactory: storageFactory }
     ],
     bootstrap: [AppComponent]
 })

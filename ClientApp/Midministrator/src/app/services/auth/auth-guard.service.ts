@@ -25,7 +25,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
       return this.authService.AuthStatus().toPromise().then(next => {
         if (!next.loggedIn) {
           console.log("Not logged in.");
-          window.location.reload();
+          //window.location.reload();
           return false;
         }
         if (next.loggedIn && !next.success) {

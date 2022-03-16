@@ -10,6 +10,7 @@ import { IntegerToBooleanPipe } from '../shared/pipes/integer-to-boolean.pipe';
 import { FormsModule, ReactiveFormsModule, FormBuilder }    from '@angular/forms';
 import { ServerInterceptorService } from '../base/server-interceptor.service';
 import { SpinnerService } from '../services/spinner.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [ClientListComponent, ClientDetailComponent, IntegerToBooleanPipe],
@@ -21,11 +22,12 @@ import { SpinnerService } from '../services/spinner.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ ClientService, FormBuilder, SpinnerService,
+  providers: [ ClientService, FormBuilder, SpinnerService, OAuthService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: ServerInterceptorService,
     multi: true
-  }]
+  }
+]
 })
 export class ClientModule { }

@@ -3,15 +3,16 @@ import { BaseHttpService } from '../base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Role } from 'src/app/models/role';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService extends BaseHttpService {
-  apiUrl = "api/roles";
+  apiUrl = `${environment.midentityUrl}/api/roles`;
 
-  constructor(public http: HttpClient) 
-  { 
+  constructor(public http: HttpClient)
+  {
     super(http);
   }
 
