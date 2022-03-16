@@ -2,6 +2,7 @@ import { Group } from "./group";
 import { Application } from "./application";
 import { Role } from "./role";
 import { Tenant } from './tenant';
+import { MidentityAccount } from "./account";
 
 export interface ApplicationRole {
     id: number;
@@ -16,7 +17,7 @@ export interface ApplicationRole {
     deleted: Date;
     deletedBy: number;
     group: Group;
-    account: Account;
+    account: MidentityAccount;
     role: Role;
     application: Application;
     tenant: Tenant;
