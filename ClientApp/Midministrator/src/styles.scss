@@ -4,7 +4,8 @@
 
 body {
   margin: 0;
-  background-color: #424242;
+  background-color: #373636;
+  font-family: Raleway,sans-serif;;
 }
 
 app-nav-menu {
@@ -48,13 +49,13 @@ app-nav-menu {
     display: flex;
     flex-direction: column;
   }
-  
+
   .form-group-style > * {
     width: 100%;
   }
 
   .fill-remaining-space {
-    /* This fills the remaining space, by using flexbox. 
+    /* This fills the remaining space, by using flexbox.
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
   }

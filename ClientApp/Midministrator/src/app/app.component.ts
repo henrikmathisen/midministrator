@@ -1,9 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { Subscription, tap } from 'rxjs';
-import { authCodeFlowConfig } from './auth-config';
-import { AuthService } from './services/auth/auth.service';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { SpinnerService } from './services/spinner.service';
 
 @Component({
@@ -15,7 +12,7 @@ export class AppComponent implements OnDestroy {
 
   private loggedInSub: Subscription;
 
-  constructor(private router: Router, private spinner: SpinnerService, private authService: AuthService ) {
+  constructor(private router: Router, private spinner: SpinnerService) {
 
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {

@@ -1,11 +1,10 @@
-import { Injectable, OnDestroy, Optional } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { combineLatest, Observable, of, Subscription, throwError } from 'rxjs';
-import { tap, catchError, skipUntil, retryWhen, filter, timeout, map, concatMap } from 'rxjs/operators';
+import { Injectable, Optional } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { filter, map, concatMap } from 'rxjs/operators';
 import { OAuthModuleConfig, OAuthResourceServerErrorHandler, OAuthStorage } from 'angular-oauth2-oidc';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth/auth.service';
-import { M } from '@angular/cdk/keycodes';
 
 
 @Injectable({

@@ -28,7 +28,8 @@
               "src/silent-refresh.html"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ngx-spinner/animations/square-jelly-box.css"
             ],
             "scripts": [],
             "vendorChunk": true,

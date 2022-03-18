@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~13.2.6",
     "@angular/router": "~13.2.6",
     "angular-oauth2-oidc": "^13.0.1",
+    "ngx-spinner": "^13.1.1",
     "ngx-trim-directive": "^1.1.0",
     "rxjs": "^7.4.0",
     "tslib": "^2.0.0",
