@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { Subscription, tap } from 'rxjs';
 import { authCodeFlowConfig } from './auth-config';
+import { AuthService } from './services/auth/auth.service';
 import { SpinnerService } from './services/spinner.service';
 
 @Component({
@@ -9,16 +11,11 @@ import { SpinnerService } from './services/spinner.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor(private router: Router, private spinner: SpinnerService, private authService: OAuthService ) {
-    this.authService.configure(authCodeFlowConfig);
-    this.authService.loadDiscoveryDocument().then(discoveryDoc => {
-      if (!this.authService.hasValidAccessToken()) {
-        this.authService.initLoginFlowInPopup();
-      } else {
-        this.authService.setupAutomaticSilentRefresh();
-      }
-    });
+export class AppComponent implements OnDestroy {
+
+  private loggedInSub: Subscription;
+
+  constructor(private router: Router, private spinner: SpinnerService, private authService: AuthService ) {
 
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -35,6 +32,11 @@ export class AppComponent {
       }
     });
   }
+
   title = 'Midministrator';
+
+  ngOnDestroy(): void {
+    this.loggedInSub.unsubscribe();
+  }
 
 }

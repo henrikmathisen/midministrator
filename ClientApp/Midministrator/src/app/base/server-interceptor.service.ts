@@ -1,9 +1,11 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, OnDestroy, Optional } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { combineLatest, Observable, of, Subscription, throwError } from 'rxjs';
+import { tap, catchError, skipUntil, retryWhen, filter, timeout, map, concatMap } from 'rxjs/operators';
 import { OAuthModuleConfig, OAuthResourceServerErrorHandler, OAuthStorage } from 'angular-oauth2-oidc';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../services/auth/auth.service';
+import { M } from '@angular/cdk/keycodes';
 
 
 @Injectable({
@@ -11,36 +13,56 @@ import { environment } from 'src/environments/environment';
 })
 export class ServerInterceptorService implements HttpInterceptor  {
 
+
   constructor(
     private authStorage: OAuthStorage,
+    private authService: AuthService,
     private errorHandler: OAuthResourceServerErrorHandler,
     @Optional() private moduleConfig: OAuthModuleConfig
 ) {
 }
+
 public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
   let url = req.url.toLowerCase();
 
   if (!this.moduleConfig) return next.handle(req);
   if (!this.moduleConfig.resourceServer) return next.handle(req);
-  if (!this.moduleConfig.resourceServer.allowedUrls) return next.handle(req);
   if (!url.startsWith(`${environment.midentityUrl}/api`)) return next.handle(req);
 
-      let token = this.authStorage.getItem('access_token');
-      let header = 'Bearer ' + token;
+    req = this.transformRequest(req);
 
-      let headers = req.headers
-                          .set('Authorization', header);
+    return this.authService.loggedIn$.pipe(
+      filter(v => v),
+      map(loggedIn => req.clone( { setHeaders: { Authorization: `Bearer ${this.authService.oAuthService.getAccessToken()}` } } )),
+      concatMap(authReq => next.handle(authReq))
+    );
 
-      req = req.clone({ headers });
+      // return next.handle(req).pipe(
 
+      //   catchError(error => {
+      //           console.error("error intercepted");
+      //           console.error(error);
+      //           return throwError(() => new Error(error));
+      //         }),
+      //   retryWhen(errors =>
+      //     this.authService.loggedIn$.pipe(
+      //     filter(v => v),
+      //     tap(any => {
 
-      return next.handle(req).pipe(catchError(error => {
-                console.error("error intercepted");
-                console.error(error);
-                return throwError(() => new Error(error));
-              }));
+      //      })
+      //     )
+      //   ));
+}
 
+private transformRequest (req: HttpRequest<any>) : HttpRequest<any> {
+  let token = this.authStorage.getItem('access_token');
+  let header = 'Bearer ' + token;
+  let headers = req.headers
+                      .set('Authorization', header);
+  req = req.clone({ headers });
+  console.log(req);
+  return req;
 }
 
 

@@ -11,6 +11,7 @@ import { ClientService } from '../services/client/client.service';
 import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.component';
 import { ServerInterceptorService } from '../base/server-interceptor.service';
 import { SpinnerService } from '../services/spinner.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @NgModule({
   declarations: [ApplicationListComponent, ApplicationDetailComponent],
@@ -22,7 +23,7 @@ import { SpinnerService } from '../services/spinner.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers : [ ApplicationService, ClientService, SpinnerService, FormBuilder,
+  providers : [ ApplicationService, ClientService, SpinnerService, FormBuilder, AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerInterceptorService,

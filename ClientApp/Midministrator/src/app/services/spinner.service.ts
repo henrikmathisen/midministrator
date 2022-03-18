@@ -3,7 +3,8 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { BehaviorSubject, timer } from 'rxjs'
-import { scan, map, debounce } from 'rxjs/operators'
+import { scan, map, debounce, tap } from 'rxjs/operators'
+import { AuthService } from './auth/auth.service';
 
 
 @Injectable({
@@ -15,7 +16,7 @@ export class SpinnerService {
 
   spin$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private overlay: Overlay) {
+  constructor(private overlay: Overlay, private authService: AuthService) {
     this.spin$
       .asObservable()
       .pipe(
@@ -29,6 +30,11 @@ export class SpinnerService {
             this.spinner.hasAttached() ? this.stopSpinner() : null;
           }
         }
+      )
+      this.authService.loggedIn$.pipe(
+        tap(loggedin => {
+          if (!loggedin) this.spin$.next(true);
+        })
       )
   }
 

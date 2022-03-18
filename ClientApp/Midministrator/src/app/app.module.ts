@@ -15,6 +15,7 @@ import { AuthService } from './services/auth/auth.service';
 import { SpinnerService } from './services/spinner.service';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { environment } from 'src/environments/environment';
+import { LoginComponent } from './login/login.component';
 
 export function storageFactory() : OAuthStorage {
   return localStorage
@@ -25,7 +26,8 @@ export function storageFactory() : OAuthStorage {
         AppComponent,
         NavMenuComponent,
         ConfirmDialogComponent,
-        ErrorDialogComponent
+        ErrorDialogComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
