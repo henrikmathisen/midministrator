@@ -47,7 +47,11 @@ const routes: Routes = [
     path: 'identityresources',
     canLoad: [AuthGuardService], canActivate: [AuthGuardService],
     loadChildren: () => import('./identity-resource/identity-resource.module').then(mod => mod.IdentityResourceModule)
-  }
+  },
+  {
+     path: 'tenants',
+     canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+    loadChildren: () => import('./tenant/tenant.module').then(m => m.TenantModule) }
 ];
 
 @NgModule({
