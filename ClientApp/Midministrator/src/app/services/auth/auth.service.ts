@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject, tap, Subject } from 'rxjs';
 import { AuthResult } from '../../models/auth-result';
 import { OAuthEvent, OAuthService, OAuthSuccessEvent } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from 'src/app/auth-config';
+import { SpinnerService } from '../spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService  {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public loggedIn$ = this.loggedIn.asObservable();
 
-  constructor(public oAuthService: OAuthService)
+  constructor(public oAuthService: OAuthService, private spinnerService: SpinnerService)
   {
 
     this.oAuthService.events.subscribe({
@@ -26,13 +27,14 @@ export class AuthService  {
       }
     });
 
-
-
     this.oAuthService.configure(authCodeFlowConfig);
 
     this.oAuthService.loadDiscoveryDocumentAndTryLogin().then(discoSuccess => {
       if (discoSuccess && !this.oAuthService.hasValidAccessToken()) {
-        this.oAuthService.initLoginFlowInPopup();
+        this.spinnerService.spin$.next(true);
+        this.oAuthService.initLoginFlowInPopup().then().finally(() => {
+          this.spinnerService.spin$.next(false);
+        })
       }
     });
 
