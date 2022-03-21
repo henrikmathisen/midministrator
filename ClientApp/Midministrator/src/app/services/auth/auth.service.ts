@@ -43,6 +43,8 @@ export class AuthService  {
       this.loggedIn.next(true);
     }
 
+    this.loggedIn.next(this.oAuthService.hasValidAccessToken());
+
   }
 
 }

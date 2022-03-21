@@ -22,6 +22,6 @@ export class SpinnerService {
         }
       }
       );
-      setTimeout(() => this.spinner.show(), 2000);
+      //setTimeout(() => this.spinner.show(), 2000);
   }
 }

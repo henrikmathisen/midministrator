@@ -7,45 +7,45 @@ import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  { path: '',  pathMatch: 'full', component: AppComponent
-    // canLoad: [AuthGuardService], canActivate: [AuthGuardService]
+  { path: '',  pathMatch: 'full', component: AppComponent,
+     canLoad: [AuthGuardService], canActivate: [AuthGuardService]
   },
   { path: 'clients',
     loadChildren: () => import ('./client/client.module').then(mod => mod.ClientModule)
   },
   {
     path: 'applications',
-    // canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+     canLoad: [AuthGuardService], canActivate: [AuthGuardService],
       loadChildren: () => import('./application/application.module').then(mod => mod.ApplicationModule)
   },
   {
     path: 'roles',
-    //canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService], canActivate: [AuthGuardService],
     loadChildren: () => import('./role/role.module').then(mod => mod.RoleModule)
   },
   {
     path: 'users',
-    //canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService], canActivate: [AuthGuardService],
     loadChildren: () => import('./user/user.module').then(mod => mod.UserModule)
   },
   {
     path: 'groups',
-    //canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService], canActivate: [AuthGuardService],
     loadChildren: () => import('./group/group.module').then(mod => mod.GroupModule)
   },
   {
     path: 'grants',
-    //canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService], canActivate: [AuthGuardService],
     loadChildren: () => import('./grant/grant.module').then(mod => mod.GrantModule)
   },
   {
     path: 'apiresources',
-    //canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService], canActivate: [AuthGuardService],
     loadChildren: () => import('./api-resource/api-resource.module').then(mod => mod.ApiResourceModule)
   },
   {
     path: 'identityresources',
-    //canLoad: [AuthGuardService], canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService], canActivate: [AuthGuardService],
     loadChildren: () => import('./identity-resource/identity-resource.module').then(mod => mod.IdentityResourceModule)
   }
 ];

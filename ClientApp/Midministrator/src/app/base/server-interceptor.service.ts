@@ -31,6 +31,8 @@ public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent
 
     req = this.transformRequest(req);
 
+    this.authService.loggedIn$.subscribe();
+
     return this.authService.loggedIn$.pipe(
       filter(v => v),
       map(loggedIn => req.clone( { setHeaders: { Authorization: `Bearer ${this.authService.oAuthService.getAccessToken()}` } } )),
