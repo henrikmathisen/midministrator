@@ -13,14 +13,14 @@ export class UserDataSource extends DataSource<MidentityAccount> {
 
     public loading$ = this.loadingSubject.asObservable();
 
-    constructor(private userService: UserService) 
-    { 
+    constructor(private userService: UserService)
+    {
         super();
     }
 
     connect(collectionViewer: CollectionViewer): Observable<MidentityAccount[]> {
         return this.accountSubject.asObservable();
-    }   
+    }
 
     disconnect(collectionViewer: CollectionViewer): void {
 
@@ -37,9 +37,9 @@ export class UserDataSource extends DataSource<MidentityAccount> {
             catchError(() => of({ items: [], size: 0 })),
             finalize(() => this.loadingSubject.next(false)))
         .subscribe({
-            next: data => { this.accountSubject.next(data.items); this.collectionSizeSubject.next(data.size); }
+            next: data => { this.accountSubject.next(data.items); this.collectionSizeSubject.next(data.size); this.loadingSubject.next(false); }
         });
     }
 
-    
+
 }
