@@ -31,7 +31,9 @@ export class AppComponent implements OnDestroy  {
     });
 
     this.loggedInSub = this.authService.loggedIn$.subscribe({
-      next: () => this.router.navigateByUrl('/clients')
+      next: (loggedIn) => {
+        if (loggedIn) this.router.navigateByUrl('/clients');
+      }
     });
   }
 
