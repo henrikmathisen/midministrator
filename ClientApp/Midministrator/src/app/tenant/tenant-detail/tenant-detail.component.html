@@ -1,1 +1,31 @@
-<p>tenant-detail works!</p>
+<div class="padding">
+  <mat-card *ngIf="tenant$ | async as tenant" class="tenant-card">
+    <mat-card-title>
+      {{ tenant.name }}
+    </mat-card-title>
+    <mat-card-content>
+
+      <div class="tenant-grid">
+
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="tenant.name" #name="ngModel" >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Identifier</mat-label>
+        <input matInput [ngModel]="tenant.identifier" #identifier="ngModel" readonly>
+      </mat-form-field>
+
+
+        <mat-checkbox [(ngModel)]="tenant.isDeleted" #isDeleted="ngModel">Deleted</mat-checkbox>
+
+
+      <app-group-edit [tenantId]="tenant.id"></app-group-edit>
+
+    </div>
+
+
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,54 @@
+<mat-card>
+    <mat-card-content>
+        Groups assigned to tenant
+        <div class="mat-elevation-z8 scrollable">
+        <table mat-table [dataSource]="groupsForTenant$" class="group-edit-table">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let group">{{group.name}}</td>
+          </ng-container>
+          <ng-container matColumnDef="adfssid">
+            <th mat-header-cell *matHeaderCellDef>ADFSSID</th>
+            <td mat-cell *matCellDef="let group">{{group.adfssid}}</td>
+          </ng-container>
+          <ng-container matColumnDef="azureId">
+            <th mat-header-cell *matHeaderCellDef>AzureId</th>
+            <td mat-cell *matCellDef="let group">{{group.azureId}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="groupRowDef"></tr>
+          <tr
+              mat-row
+
+              *matRowDef="let row; columns: groupRowDef;"
+          ></tr>
+        </table>
+      </div>
+    </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+      Groups available
+      <div class="mat-elevation-z8 scrollable">
+      <table mat-table [dataSource]="availableGroups$" class="group-edit-table">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let group">{{group.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="adfssid">
+          <th mat-header-cell *matHeaderCellDef>ADFSSID</th>
+          <td mat-cell *matCellDef="let group">{{group.adfssid}}</td>
+        </ng-container>
+        <ng-container matColumnDef="azureId">
+          <th mat-header-cell *matHeaderCellDef>AzureId</th>
+          <td mat-cell *matCellDef="let group">{{group.azureId}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="groupRowDef"></tr>
+        <tr
+            mat-row
+
+            *matRowDef="let row; columns: groupRowDef;"
+        ></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

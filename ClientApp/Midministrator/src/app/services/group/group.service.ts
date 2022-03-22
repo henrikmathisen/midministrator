@@ -10,24 +10,28 @@ import { environment } from 'src/environments/environment';
 })
 export class GroupService extends BaseHttpService {
 
-  private apiUrl = `${environment.midentityUrl}/api/groups`;
+  private apiUrl = `${environment.midentityUrl}/api`;
 
   constructor(public http: HttpClient) {
     super(http);
   }
 
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(`${this.apiUrl}/adfs`);
+    return this.http.get<Group[]>(`${this.apiUrl}/groups/adfs`);
   }
 
   getGroup(id: number): Observable<Group> {
-    return this.http.get<Group>(`${this.apiUrl}/${id}`);
+    return this.http.get<Group>(`${this.apiUrl}/groups/${id}`);
   }
 
   updateGroup(group: Group): Observable<Group> {
     group.accountGroups = null;
     let model = JSON.stringify(group);
-    return this.http.post<Group>(`${this.apiUrl}/Update`, model, { headers: this.headers });
+    return this.http.post<Group>(`${this.apiUrl}/groups/Update`, model, { headers: this.headers });
+  }
+
+  getGroupsForTenant(tenantId: number): Observable<Group[]> {
+    return this.http.get<Group[]>(`${this.apiUrl}/tenant/GetGroupsForTenant/${tenantId}`);
   }
 
 }

@@ -7,8 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  { path: '',  pathMatch: 'full', component: AppComponent,
-     canLoad: [AuthGuardService], canActivate: [AuthGuardService]
+  { path: '',  pathMatch: 'full', component: LoginComponent,
+
   },
   { path: 'clients',
     loadChildren: () => import ('./client/client.module').then(mod => mod.ClientModule)

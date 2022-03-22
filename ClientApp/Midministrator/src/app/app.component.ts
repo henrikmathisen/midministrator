@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { distinctUntilChanged, Subscription, take } from 'rxjs';
 import { AuthService } from './services/auth/auth.service';
 import { SpinnerService } from './services/spinner.service';
 
@@ -9,11 +9,11 @@ import { SpinnerService } from './services/spinner.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy  {
+export class AppComponent  {
 
-  private loggedInSub: Subscription;
 
-  constructor(private router: Router, private spinner: SpinnerService, private authService: AuthService) {
+
+  constructor(private router: Router, private spinner: SpinnerService) {
 
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -30,16 +30,9 @@ export class AppComponent implements OnDestroy  {
       }
     });
 
-    this.loggedInSub = this.authService.loggedIn$.subscribe({
-      next: (loggedIn) => {
-        if (loggedIn) this.router.navigateByUrl('/clients');
-      }
-    });
+
   }
 
-  ngOnDestroy(): void {
-    this.loggedInSub.unsubscribe();
-  }
 
   title = 'Midministrator';
 

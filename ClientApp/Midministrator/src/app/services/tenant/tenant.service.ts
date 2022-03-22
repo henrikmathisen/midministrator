@@ -30,4 +30,8 @@ export class TenantService extends BaseHttpService implements DataSource<Tenant>
     return this.http.get<Tenant[]>(`${this.apiUrl}/tenant/all`);
   }
 
+  getTenant(id: number): Observable<Tenant> {
+    return this.http.get<Tenant>(`${this.apiUrl}/tenant/id/${id}`);
+  }
+
 }

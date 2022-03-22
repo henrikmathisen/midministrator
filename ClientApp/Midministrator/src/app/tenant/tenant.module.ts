@@ -10,17 +10,22 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerInterceptorService } from '../base/server-interceptor.service';
 import { SpinnerService } from '../services/spinner.service';
 import { MaterialModule } from '../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GroupEditComponent } from './group-edit/group-edit.component';
 
 
 @NgModule({
   declarations: [
     TenantListComponent,
-    TenantDetailComponent
+    TenantDetailComponent,
+    GroupEditComponent
   ],
   imports: [
     CommonModule,
     TenantRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     TenantService,
