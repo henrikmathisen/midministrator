@@ -39,12 +39,15 @@ export class TenantDetailComponent implements OnInit {
   }
 
   onSaveClick(tenant: Tenant) {
+    const id = tenant.id;
     this.tenant$ = this.tenantService.addOrUpdateTenant(tenant).pipe(
       tap(result => {
         this.snackBar.open("Tenant saved", "OK", {
           duration: 2000
         });
-        this.location.replaceState(`/tenants/${result.id}`)
+        if (id < 1) {
+          this.location.replaceState(`/tenants/${result.id}`);
+        }
       })
     )
   }
