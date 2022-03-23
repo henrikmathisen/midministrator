@@ -44,6 +44,7 @@ export class TenantDetailComponent implements OnInit {
         this.snackBar.open("Tenant saved", "OK", {
           duration: 2000
         });
+        this.location.replaceState(`/tenants/${result.id}`)
       })
     )
   }
