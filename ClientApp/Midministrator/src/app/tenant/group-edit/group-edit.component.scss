@@ -3,10 +3,26 @@
 }
 
 .mat-cell, .mat-header-cell {
-  padding: 1em;
+  //padding: 1em;
 }
 
 .scrollable {
   max-height: 400px;
   overflow: auto;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: white;
+}
+
+.group-edit-grid {
+  display:grid;
+  grid-template-columns: auto auto;
+  justify-items: stretch;
 }

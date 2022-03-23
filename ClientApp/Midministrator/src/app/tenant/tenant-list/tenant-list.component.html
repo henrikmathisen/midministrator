@@ -4,7 +4,9 @@
       <!-- <mat-form-field class="third-width">
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
       </mat-form-field> -->
-
+      <mat-card-actions>
+        <button align="end" mat-flat-button color="primary" [routerLink]="0">New tenant</button>
+      </mat-card-actions>
       <table mat-table [dataSource]="tenantService" class="full-width">
 
           <ng-container matColumnDef="edit">

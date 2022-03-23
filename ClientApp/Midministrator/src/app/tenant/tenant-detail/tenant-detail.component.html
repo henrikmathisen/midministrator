@@ -7,25 +7,29 @@
 
       <div class="tenant-grid">
 
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput [(ngModel)]="tenant.name" #name="ngModel" >
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="tenant.name" #name="ngModel">
+          </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Identifier</mat-label>
-        <input matInput [ngModel]="tenant.identifier" #identifier="ngModel" readonly>
-      </mat-form-field>
-
-
-        <mat-checkbox [(ngModel)]="tenant.isDeleted" #isDeleted="ngModel">Deleted</mat-checkbox>
+          <mat-form-field>
+            <mat-label>Identifier</mat-label>
+            <input matInput [ngModel]="tenant.identifier" #identifier="ngModel" readonly>
+          </mat-form-field>
 
 
-      <app-group-edit [tenantId]="tenant.id"></app-group-edit>
+          <mat-checkbox [(ngModel)]="tenant.isDeleted" #isDeleted="ngModel">Deleted</mat-checkbox>
 
-    </div>
+
+          <app-group-edit class="group-edit" [tenantId]="tenant.id" [tenantName]="tenant.name"></app-group-edit>
+
+      </div>
 
 
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button color="primary" (click)="onSaveClick(tenant)">Save</button>
+      <button mat-flat-button color="warn" (click)="onCancelClick()" style="margin-left:1em;" >Cancel</button>
+    </mat-card-actions>
   </mat-card>
 </div>

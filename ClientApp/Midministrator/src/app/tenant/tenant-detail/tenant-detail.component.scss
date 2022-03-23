@@ -1,5 +1,5 @@
 .tenant-card {
-  max-width: 1260px;
+
 }
 
 .tenant-grid {
@@ -10,10 +10,14 @@
 }
 
 .tenant-card .mat-input-element {
-  width: 220px;
+  //width: 220px;
   font-size: 16px;
 }
 
 .padding {
   padding: 3em;
+}
+
+.group-edit {
+  grid-column-start: span 2;
 }

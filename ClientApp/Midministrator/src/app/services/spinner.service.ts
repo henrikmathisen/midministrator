@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs'
-import { distinctUntilChanged } from 'rxjs/operators'
+import { distinctUntilChanged, tap } from 'rxjs/operators'
 import { NgxSpinnerService } from 'ngx-spinner';
 
 
@@ -14,7 +14,7 @@ export class SpinnerService {
   constructor(private spinner: NgxSpinnerService) {
     this.spin$
       .asObservable()
-      .pipe(distinctUntilChanged())
+      .pipe(distinctUntilChanged(), tap((res) => console.log("spin!", res)))
       .subscribe(
         { next: res => {
           if (res) this.spinner.show();
