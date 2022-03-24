@@ -182,7 +182,7 @@
                         </mat-card-header>
                         <mat-card-content class="sixteenpix">
                             <div class="form-group-style">
-                                    
+
                             </div>
                         </mat-card-content>
                     </mat-card>
@@ -332,8 +332,8 @@
             </div>
         </mat-card-content>
         <mat-card-actions style="margin-left:16px;" >
-            <button mat-stroked-button type="submit" [disabled]="!clientForm.valid || submitted" (click)="this.onSubmit()" color="warn" #saveButton name="saveButton"><b>Save</b></button>
-            <button style="margin-left:8px;" mat-stroked-button type="submit" (click)="this.onCancel()" color="warn"><b>Cancel</b></button>
+            <button  mat-flat-button color="primary" type="submit" [disabled]="!clientForm.valid || submitted" (click)="this.onSubmit()" #saveButton name="saveButton"><b>Save</b></button>
+            <button  mat-flat-button color="warn" style="margin-left:8px;" type="submit" (click)="this.onCancel()" ><b>Cancel</b></button>
         </mat-card-actions>
     </form>
 </mat-card>

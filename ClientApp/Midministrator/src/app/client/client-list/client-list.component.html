@@ -1,7 +1,7 @@
 <div>
-    
+
    <mat-card >
-        <button mat-stroked-button [routerLink]="[0]">
+        <button  mat-flat-button color="primary" [routerLink]="[0]">
             New Client
         </button>
     </mat-card>
@@ -11,7 +11,7 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let client">
                 <span class="fill-remaining-space"></span>
-                <button mat-stroked-button color="warn" [routerLink]="[client.id]">Edit</button>
+                <button  mat-flat-button color="primary" [routerLink]="[client.id]">Edit</button>
             </td>
         </ng-container>
 
