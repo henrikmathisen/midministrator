@@ -19,7 +19,7 @@ export class TenantDetailComponent implements OnInit {
     private snackBar: MatSnackBar)
   {
     const id = +this.route.snapshot.paramMap.get('id');
-    if (id > 0) {
+    if (id && id > 0) {
       this.tenant$ = this.tenantService.getTenant(id);
     } else {
       this.tenant$ = of({
@@ -46,6 +46,7 @@ export class TenantDetailComponent implements OnInit {
           duration: 2000
         });
         if (id < 1) {
+          // tenant was created, update the route with the returned id
           this.location.replaceState(`/tenants/${result.id}`);
         }
       })

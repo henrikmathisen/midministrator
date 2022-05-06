@@ -14,7 +14,7 @@ export class SpinnerService {
   constructor(private spinner: NgxSpinnerService) {
     this.spin$
       .asObservable()
-      .pipe(distinctUntilChanged(), tap((res) => console.log("spin!", res)))
+      .pipe(distinctUntilChanged())
       .subscribe(
         { next: res => {
           if (res) this.spinner.show();
@@ -22,6 +22,5 @@ export class SpinnerService {
         }
       }
       );
-      //setTimeout(() => this.spinner.show(), 2000);
   }
 }

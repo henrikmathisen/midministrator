@@ -55,21 +55,6 @@ public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent
       return evt;
     }));
 
-      // return next.handle(req).pipe(
-
-      //   catchError(error => {
-      //           console.error("error intercepted");
-      //           console.error(error);
-      //           return throwError(() => new Error(error));
-      //         }),
-      //   retryWhen(errors =>
-      //     this.authService.loggedIn$.pipe(
-      //     filter(v => v),
-      //     tap(any => {
-
-      //      })
-      //     )
-      //   ));
 }
 
 private transformRequest (req: HttpRequest<any>) : HttpRequest<any> {
@@ -82,14 +67,4 @@ private transformRequest (req: HttpRequest<any>) : HttpRequest<any> {
   return req;
 }
 
-
-//   public intercept(req: HttpRequest<any>,
-//     next: HttpHandler): Observable<HttpEvent<any>> {
-//       return next.handle(req).pipe(catchError(error => {
-//         console.error("error intercepted");
-//         console.error(error);
-// //        if (error.status && error.status === 401) window.location.reload();
-//         return throwError(error);
-//       }));
-//   }
 }
